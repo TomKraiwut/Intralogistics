@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง — Intralogistics with Plant Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=d8c72085">
+</head>
+<body>
+<div id="wrapper">
+  <div id="main">
+    <div class="inner">
+      <header id="header">
+        <a href="../index.html" class="logo"><span>Intralogistics with Plant Simulation</span></a>
+        <button class="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      </header>
+
+      <main>
+        <h1>1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</h1>
+        <p class="lead">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน · ภาคปฏิบัติ</p>
+
+        <div class="objectives">
+          <p>วัตถุประสงค์การเรียนรู้</p>
+          <ol>
+          <li>เปิดโมเดลตัวอย่าง Factory 51 ใน Plant Simulation 2504 และควบคุมมุมมอง 3D ได้</li>
+          <li>ชี้ได้ว่าอุปกรณ์เคลื่อนย้ายแต่ละแบบในโรงงาน (รถบรรทุก เครน รถยก AGV สายพาน AS/RS) ทำหน้าที่อะไรในการรับ–เก็บ–ส่งของ</li>
+          <li>อ่านข้อมูลแบบระบบสารสนเทศ (WMS ของคลัง HBW) และเชื่อมการขนส่งกับกิจกรรมคลังจากผลการรันได้</li>
+          </ol>
+        </div>
+
+<p class="lead" style="max-width:46em;">บทนี้ยังไม่ต้องสร้างอะไรเอง — เปิดโรงงานตัวอย่าง <strong>Factory 51</strong> ที่มากับโปรแกรม
+แล้วเดินชมทั้งระบบตั้งแต่รถบรรทุกส่งของเข้า เก็บ ผลิต จนถึงคลังอัตโนมัติและรถส่งของออก เพื่อเห็นของจริงของเรื่องที่เรียนในบท
+<a href="01.html">1.1</a>: อุปกรณ์เคลื่อนย้าย ระบบสารสนเทศ (WMS) และการขนส่งกับกิจกรรมคลัง</p>
+
+<div class="tip"><strong>สิ่งที่ต้องมี:</strong> Plant Simulation 2504 (ติดตั้งตามบท <a href="../start/01.html">0.1</a>)
+— ไฟล์ <code>Factory51.spp</code> มากับโปรแกรมอยู่แล้วในโฟลเดอร์ <code>Examples\3D</code> ของโฟลเดอร์ติดตั้ง ไม่ต้องดาวน์โหลดเพิ่ม</div>
+
+<div class="note"><strong>Student License:</strong> Factory 51 มี Object มากกว่า 80 ตัว จึงเปิดได้แบบ <strong>Viewer</strong>
+คือดูและรันได้ แต่บันทึกการแก้ไขไม่ได้ — พอสำหรับบทนี้ ถ้าโปรแกรมถามตอนเปิดไฟล์ ให้ตอบ <strong>Yes</strong></div>
+
+<h2>ภาพรวม</h2>
+<table>
+<tr><th>ขั้น</th><th>ทำอะไร</th><th>เชื่อมกับเนื้อหา</th></tr>
+<tr><td>1</td><td>เปิด Factory 51 จาก Example Models</td><td>—</td></tr>
+<tr><td>2</td><td>ซูม เลื่อน หมุนมุมมอง 3D</td><td>—</td></tr>
+<tr><td>3</td><td>เดินชม 5 โซน</td><td>อุปกรณ์เคลื่อนย้าย · การขนส่งกับกิจกรรมคลัง</td></tr>
+<tr><td>4</td><td>เปิด Frame ด้านใน: โรงผลิต P1 และคลัง HBW</td><td>AS/RS</td></tr>
+<tr><td>5</td><td>อ่านข้อมูลของ WMS</td><td>ระบบสารสนเทศคลังสินค้า</td></tr>
+<tr><td>6</td><td>รัน 1 ชั่วโมง แล้วกรอกตารางผล</td><td>การขนส่ง · KPI</td></tr>
+</table>
+
+<h2>ขั้นที่ 1: เปิด Factory 51</h2>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-01.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-01.jpg" alt="Start Page ของ Plant Simulation 2504 และปุ่ม Example Models" loading="lazy"></a>
+</figure></div>
+  <div><ol class="step-list">
+    <li><span class="num">1</span><span class="text">เปิด Plant Simulation 2504 — หน้าแรกคือ <strong>Start Page</strong></span></li>
+    <li><span class="num">2</span><span class="text">ในกลุ่ม <strong>Getting Started</strong> คลิก <strong>Example Models</strong></span></li>
+  </ol></div>
+</div>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-02.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-02.jpg" alt="หน้าต่าง Example Models ของ Plant Simulation 2504" loading="lazy"></a>
+</figure></div>
+  <div><ol class="step-list">
+    <li><span class="num">1</span><span class="text">หน้าต่าง <strong>Example Models</strong> แสดงโมเดลตัวอย่าง 7 รายการ — คลิก <strong>Factory 51</strong></span></li>
+    <li><span class="num">2</span><span class="text">ถ้าปิด Start Page ไปแล้ว เปิดไฟล์เองได้: <code>File → Open</code> แล้วเลือก <code>Examples\3D\Factory51.spp</code> ในโฟลเดอร์ติดตั้ง</span></li>
+  </ol></div>
+</div>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-03.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-03.jpg" alt="Factory 51 ที่เปิดแล้วในหน้าต่าง 3D" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">Class Library → <strong>Models → Factory51</strong> คือโมเดลที่เปิดอยู่</span></li>
+    <li><span class="num">2</span><span class="text">แท็บ <code>3D.Models.Factory51</code> — โมเดลเปิดในหน้าต่าง 3D ทันที</span></li>
+    <li><span class="num">3</span><span class="text">ปุ่มในฉาก <strong>Start/Stop Simulation</strong> และ <strong>Reset Simulation</strong></span></li>
+    <li><span class="num">4</span><span class="text">นาฬิกา <strong>EventController</strong> — ใช้ในขั้นที่ 6</span></li>
+    <li><span class="num">5</span><span class="text">ตัวนับ <strong>TrucksArrived</strong> / <strong>TrucksMissed</strong> — รถบรรทุกที่เข้ามาแล้ว / ที่พลาดคิว</span></li>
+  </ol>
+
+<h2>ขั้นที่ 2: ควบคุมมุมมอง 3D</h2>
+<table>
+<tr><th>เมาส์ / ปุ่ม (ทดสอบบน 2504)</th><th>ผล</th></tr>
+<tr><td>หมุนล้อเมาส์</td><td>ซูมเข้า–ออก</td></tr>
+<tr><td>คลิกขวาค้างแล้วลาก</td><td>เลื่อนฉาก (Pan)</td></tr>
+<tr><td>กดล้อเมาส์ค้างแล้วลาก หรือ <code>Ctrl</code> + คลิกขวาค้างแล้วลาก</td><td>หมุนฉาก</td></tr>
+<tr><td>กด <code>V</code></td><td>View All — เห็นทั้งโรงงาน</td></tr>
+</table>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-04.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-04.jpg" alt="กด V เพื่อดูทั้งโรงงาน" loading="lazy"></a>
+  <figcaption>กด V แล้วเห็นทั้งโรงงานในภาพเดียว</figcaption>
+</figure>
+<div class="note"><strong>ต่างจาก 2606:</strong> ใน 2504 การกดล้อเมาส์ค้างแล้วลากคือ<strong>หมุน</strong> (ใน 2606 คือเลื่อน)
+— ถ้าดูคู่มือหรือวิดีโอของเวอร์ชันอื่น ให้ลองกับโปรแกรมของตัวเองก่อน</div>
+
+<h2>ขั้นที่ 3: เดินชม 5 โซน</h2>
+<p>ซูมและเลื่อนไปดูทีละโซนตามลำดับการไหลของของ: รับของ → ผลิต → ขนส่งภายใน → คลังอัตโนมัติ → ส่งของ
+(ภาพทั้งหมดถ่ายที่เวลาจำลอง 20 นาที)</p>
+
+<h3>3.1 รับของ (Inbound)</h3>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-05.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-05.jpg" alt="โซนรับของของ Factory 51" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>รถบรรทุก</strong> วิ่งเข้าตามถนน (<code>SupplyRoad</code>) — การขนส่งขาเข้า</span></li>
+    <li><span class="num">2</span><span class="text"><strong>เครนขนาดเล็ก</strong> (<code>SmallCrane</code>) จัดการกองพาเลทเปล่า</span></li>
+    <li><span class="num">3</span><span class="text"><strong>สายพาน + หุ่นยนต์หยิบวาง</strong> ส่งพาเลทเข้าโรงผลิต</span></li>
+    <li><span class="num">4</span><span class="text"><strong>เครนแบบพอร์ทัล</strong> (<code>MultiPortalCrane</code>) เก็บพาเลทในพื้นที่จัดเก็บ (<code>StorageArea</code>)</span></li>
+    <li><span class="num">5</span><span class="text"><strong>รถยกพาเลท</strong> ขนของจากรถบรรทุกเข้าพื้นที่พัก (สร้างด้วย <code>AGVPool</code> และ Method <code>UnloadTruck</code>)</span></li>
+  </ol>
+
+<h3>3.2 ผลิต (P1 / P2)</h3>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-06.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-06.jpg" alt="โรงผลิต P1 และ P2" loading="lazy"></a>
+  <figcaption>โรงผลิต P1 (หน้า) และ P2 (หลัง): สายพานพาชิ้นงานผ่านบูธพ่นสี อบ ตรวจคุณภาพ และแพ็ก โดยมีพนักงาน (WorkerPool) ทำงานที่จุดต่าง ๆ</figcaption>
+</figure>
+
+<h3>3.3 ขนส่งภายในด้วย AGV</h3>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-07.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-07.jpg" alt="AGV วิ่งตามเส้นทางสีเหลือง" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>AGV</strong> ขนของระหว่างโรงผลิตกับคลัง</span></li>
+    <li><span class="num">2</span><span class="text"><strong>เส้นทางสีเหลือง</strong> — AGV วิ่งตามเส้นทางที่กำหนด (ตรงกับลักษณะ AGV ในบท 1.1) และมีจุดชาร์จแบตเตอรี่ระหว่างทาง</span></li>
+  </ol>
+
+<h3>3.4 คลังอัตโนมัติ (HBW / AS/RS)</h3>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-08.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-08.jpg" alt="คลังอัตโนมัติ HBW" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>ชั้นวางสูงพร้อมเครน</strong> — คลังอัตโนมัติสร้างด้วย Library HBW (ดูในขั้นที่ 4)</span></li>
+    <li><span class="num">2</span><span class="text"><strong>สายพานขาออก</strong> พาพาเลทจากคลังไปท่าส่งของ</span></li>
+    <li><span class="num">3</span><span class="text">ตัวนับ <strong>Palettes Shipped</strong> — จำนวนพาเลทที่ส่งออกแล้ว</span></li>
+  </ol>
+
+<h3>3.5 ส่งของ (Outbound)</h3>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-09.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-09.jpg" alt="ท่าส่งของและรถบรรทุกขาออก" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>สายพานแยก 3 ท่า</strong> ส่งพาเลทถึงท้ายรถ</span></li>
+    <li><span class="num">2</span><span class="text"><strong>รถบรรทุกขาออก</strong> รอรับของที่ท่า — การขนส่งขาออก</span></li>
+    <li><span class="num">3</span><span class="text">ตัวนับ <strong>Palettes Shipped</strong></span></li>
+  </ol>
+
+<div class="tip"><strong>เทียบกับบท 1.1:</strong> ในโรงงานเดียวมีอุปกรณ์เคลื่อนย้ายครบเกือบทุกแบบในตาราง — รถบรรทุก เครน รถยก
+สายพาน หุ่นยนต์หยิบวาง AGV และ AS/RS — ลองบอกว่าแต่ละแบบถูกเลือกใช้ตรงนั้นเพราะอะไร</div>
+
+<h2>ขั้นที่ 4: เปิด Frame ด้านใน</h2>
+<p>อาคารบางหลังเป็น <strong>Frame</strong> ซ้อนอยู่ข้างใน (โมเดลย่อย) — เปิดดูข้างในได้</p>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-16.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-16.jpg" alt="คลิกขวาที่อาคารเพื่อเปิดเมนู" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>คลิกขวา</strong>ที่อาคาร — ด้านบนเมนูมีแถบปุ่ม Quick tools (Start / Stop / Reset ฯลฯ)</span></li>
+    <li><span class="num">2</span><span class="text"><strong>Open</strong> (<code>Enter</code>) — เปิด Frame ของอาคารนั้น</span></li>
+    <li><span class="num">3</span><span class="text"><strong>Show Statistics Report</strong> (<code>F6</code>) — ดูสถิติของ Object ที่เลือก</span></li>
+  </ol>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-10.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-10.jpg" alt="Frame P1 ที่เปิดแล้ว" loading="lazy"></a>
+</figure></div>
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-11.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-11.jpg" alt="Frame Warehouse (คลัง HBW) ที่เปิดแล้ว" loading="lazy"></a>
+</figure></div>
+</div>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">Frame ที่เปิดจะเป็นแท็บใหม่ด้านล่าง เช่น <code>3D.Models.Factory51.P1</code> — คลิกแท็บ <code>3D.Models.Factory51</code> เพื่อกลับ</span></li>
+    <li><span class="num">2</span><span class="text">เปิด Frame <strong>Warehouse</strong> จะเห็นชั้นวาง (RackLane) 5 แถวของคลัง HBW</span></li>
+  </ol>
+
+<h2>ขั้นที่ 5: อ่านข้อมูลของ WMS</h2>
+<p>คลัง HBW มี Frame <strong>WMS</strong> (Warehouse Management System) อยู่ใน Warehouse — ทำหน้าที่แบบเดียวกับ WMS จริง:
+รู้ว่ามีของอะไร อยู่ที่ไหน และเลือกช่องเก็บ</p>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-12.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-12.jpg" alt="Frame WMS ภายในคลัง HBW" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>Storage Strategy</strong> — วิธีเลือกช่องเก็บ: OneByOne · Random · Predefined · XYZ (โซนตามสินค้า)</span></li>
+    <li><span class="num">2</span><span class="text"><strong>NumFreePlaces / NumOccupiedPlaces</strong> — ช่องว่าง / ช่องที่มีของ (ที่ 20 นาที: ว่าง 373 · มีของ 127 จาก 500 ช่อง)</span></li>
+    <li><span class="num">3</span><span class="text">ตาราง <strong>Inventory</strong> — สินค้าในคลังแยกตามรหัส</span></li>
+    <li><span class="num">4</span><span class="text"><strong>Dialog</strong> — หน้าต่างตั้งค่า WMS</span></li>
+  </ol>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-13.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-13.jpg" alt="ตาราง Inventory ของ WMS" loading="lazy"></a>
+  <figcaption>ตาราง Inventory: รหัสสินค้า (Product) และตารางพาเลทของแต่ละรหัส</figcaption>
+</figure></div>
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-14.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-14.jpg" alt="หน้าต่าง WMS แท็บ Strategy" loading="lazy"></a>
+  <figcaption>ดับเบิลคลิก Dialog → Show Dialog: แท็บ Strategy เลือกกลยุทธ์จัดเก็บ (1)</figcaption>
+</figure></div>
+</div>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-15.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-15.jpg" alt="หน้าต่าง WMS แท็บ Statistics หลังรัน 1 ชั่วโมง" loading="lazy"></a>
+  <figcaption>แท็บ Statistics หลังรัน 1 ชั่วโมง: เครนรอ (Waiting) 91 % (1) · ใช้พื้นที่ชั้นวาง 28 % (2)</figcaption>
+</figure>
+<div class="note"><strong>ข้อคิด:</strong> เครนของคลังอัตโนมัติว่างเกือบตลอดเวลา และชั้นวางใช้ไปไม่ถึงหนึ่งในสาม — แบบเดียวกับกรณี
+"เครนทำงานแค่ประมาณ 12 %" ในบท <a href="../simulation/05.html">2.5</a>: ระบบอัตโนมัติที่ใหญ่เกินงาน ต้องดูตัวเลขก่อนตัดสินใจลงทุน</div>
+
+<h2>ขั้นที่ 6: รัน 1 ชั่วโมง แล้วกรอกตารางผล</h2>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/02-17.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-17.jpg" alt="หน้าต่าง EventController" loading="lazy"></a>
+</figure></div>
+  <div><ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>Time</strong> — เวลาจำลองตอนนี้</span></li>
+    <li><span class="num">2</span><span class="text"><strong>Reset</strong> — เวลากลับไป 0</span></li>
+    <li><span class="num">3</span><span class="text"><strong>Start</strong> — เริ่มรัน (ปุ่มถัดไปคือรันเร็วโดยไม่แสดงภาพ)</span></li>
+    <li><span class="num">4</span><span class="text">แถบ <strong>Slower / Faster</strong> — ปรับความเร็วภาพเคลื่อนไหว</span></li>
+    <li><span class="num">5</span><span class="text"><strong>Real-time ×</strong> — เร็วกว่าเวลาจริงกี่เท่า</span></li>
+  </ol></div>
+</div>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">ดับเบิลคลิกนาฬิกา EventController ในฉาก แล้วคลิก <strong>Reset</strong></span></li>
+    <li><span class="num">2</span><span class="text">แท็บ <strong>Settings</strong> ตั้งเวลาจบ (End) เป็น <code>1:00:00</code> — ในไฟล์ตัวอย่างไม่ได้ตั้งเวลาจบไว้ จะรันไปเรื่อย ๆ</span></li>
+    <li><span class="num">3</span><span class="text">คลิก <strong>Start</strong> ดูรถ เครน และ AGV ทำงาน แล้วปรับ <strong>Faster</strong> ให้ถึง 1 ชั่วโมงเร็วขึ้น</span></li>
+    <li><span class="num">4</span><span class="text">เมื่อหยุดที่ 1:00:00 อ่านค่าแล้วกรอกตาราง</span></li>
+  </ol>
+<table>
+<tr><th>ค่าที่อ่าน</th><th>อ่านจากไหน</th><th>ผลที่วัดบน 2504 (1 ชั่วโมง)</th></tr>
+<tr><td>รถบรรทุกเข้ามา / พลาดคิว</td><td>ตัวนับ TrucksArrived / TrucksMissed</td><td>6 / 0 คัน</td></tr>
+<tr><td>ช่องในคลังที่มีของ / ว่าง</td><td>WMS: NumOccupiedPlaces / NumFreePlaces</td><td>140 / 360 ช่อง</td></tr>
+<tr><td>สัดส่วนเวลาที่เครนรอ</td><td>WMS → Dialog → Statistics: Waiting</td><td>91 %</td></tr>
+</table>
+
+<div class="tip"><strong>คำถามท้ายบท:</strong>
+(1) รถบรรทุก 6 คันต่อชั่วโมงเข้ามาแล้วไม่มีคันไหนพลาดคิว — ถ้ารถมาถี่ขึ้นเป็นสองเท่า ควรดูค่าไหนก่อน?
+(2) ถ้าเครนรอ 91 % ของเวลา ควรลงทุนเครนเพิ่มหรือไม่ เพราะอะไร?
+(3) WMS ช่วยตอบคำถาม "อะไร อยู่ที่ไหน เท่าไร" ได้จากตารางไหน?</div>
+
+<h2>แบบฝึก: หา Beer room ใน Factory 51</h2>
+<p>ฝึกซูม เลื่อน และหมุนให้คล่อง — ในโรงผลิตมีห้องเล็ก ๆ ซ่อนอยู่ ลองหาเองก่อนแล้วค่อยดูเฉลย</p>
+<details>
+<summary>ดูเฉลย</summary>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/02-18.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/02-18.jpg" alt="ประตู Beer ข้างห้อง Bathroom ในโรงผลิต P1" loading="lazy"></a>
+  <figcaption>ซูมเข้าโรงผลิต P1 ใต้ชั้นลอย — ประตู Beer (1) อยู่ข้างห้อง Bathroom</figcaption>
+</figure>
+</details>
+
+        <div class="page-nav">
+          <a href="01.html">← ก่อนหน้า: 1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a>
+          <a href="03.html">ถัดไป: 1.3 สร้างโมเดลแรก: Source → Station → Drain →</a>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        Intralogistics with Plant Simulation · หลักสูตรระบบการจัดการคลังสินค้าอัตโนมัติ (INTRALOGISTICS)
+      </footer>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="inner">
+      <nav id="menu">
+        <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
+        <ul>
+          <li><a href="../index.html">หน้าแรก</a></li>
+          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li class="has-children">
+            <a href="../start/index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
+            <ul class="submenu">
+              <li><a href="../start/01.html">0.1 ติดตั้ง Plant Simulation 2504</a></li>
+              <li><a href="../start/02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a></li>
+            </ul>
+          </li>
+          <li class="has-children expanded">
+            <a href="index.html">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู logistics">▾</button>
+            <ul class="submenu">
+              <li><a href="01.html">1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a></li>
+              <li class="active"><a href="02.html">1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</a></li>
+              <li><a href="03.html">1.3 สร้างโมเดลแรก: Source → Station → Drain</a></li>
+              <li><a href="04.html">1.4 หาคอขวด (Bottleneck) และแก้ด้วยเครื่องขนาน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../simulation/index.html">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู simulation">▾</button>
+            <ul class="submenu">
+              <li><a href="../simulation/01.html">2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง</a></li>
+              <li><a href="../simulation/02.html">2.2 สร้างคลังสินค้าแรก</a></li>
+              <li><a href="../simulation/03.html">2.3 ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</a></li>
+              <li><a href="../simulation/04.html">2.4 คน และกะทำงาน (Workers & Shifts)</a></li>
+              <li><a href="../simulation/05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
+              <li><a href="../simulation/06.html">2.6 Track และ Transporter (AGV)</a></li>
+              <li><a href="../simulation/07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
+              <li><a href="../simulation/08.html">2.8 Advanced 3D Animation</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../ai/index.html">3. วิเคราะห์ข้อมูลจากแบบจำลองด้วย AI</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู ai">▾</button>
+            <ul class="submenu">
+              <li><a href="../ai/01.html">3.1 แบบจำลอง ข้อมูล และ AI ช่วยตัดสินใจ</a></li>
+              <li><a href="../ai/02.html">3.2 นำเข้าข้อมูล และจำลองสถานการณ์</a></li>
+              <li><a href="../ai/03.html">3.3 หาค่าที่เหมาะสม และ AI คาดการณ์</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../strategy/index.html">4. การจัดการเชิงกลยุทธ์และการตัดสินใจทางวิศวกรรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
+            <ul class="submenu">
+              <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
+              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../evaluation/index.html">5. การวัดและประเมินผล</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู evaluation">▾</button>
+            <ul class="submenu">
+              <li><a href="../evaluation/01.html">5.1 สอบภาคทฤษฎี</a></li>
+              <li><a href="../evaluation/02.html">5.2 สอบภาคปฏิบัติ</a></li>
+            </ul>
+          </li>
+          <li><a href="../post-test.html">แบบทดสอบหลังเรียน และแบบประเมิน</a></li>
+        </ul>
+      </nav>
+      <footer id="footer"><p class="copyright">Intralogistics with Plant Simulation</p></footer>
+    </div>
+  </div>
+  <div id="sidebar-overlay"></div>
+</div>
+<script src="../assets/main.js?v=e223124b"></script>
+</body>
+</html>

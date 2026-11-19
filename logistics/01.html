@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า — Intralogistics with Plant Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=d8c72085">
+</head>
+<body>
+<div id="wrapper">
+  <div id="main">
+    <div class="inner">
+      <header id="header">
+        <a href="../index.html" class="logo"><span>Intralogistics with Plant Simulation</span></a>
+        <button class="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      </header>
+
+      <main>
+        <h1>1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</h1>
+        <p class="lead">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน · ภาคทฤษฎี</p>
+
+        <div class="objectives">
+          <p>วัตถุประสงค์การเรียนรู้</p>
+          <ol>
+          <li>อธิบายความต่างของโลจิสติกส์กับซัพพลายเชน และกิจกรรมหลักของคลังสินค้าได้</li>
+          <li>เลือกชั้นวาง อุปกรณ์เคลื่อนย้าย และระบบสารสนเทศ (WMS / WCS) ให้เหมาะกับงานได้</li>
+          <li>ระบุความเสี่ยงด้านความปลอดภัย ปัญหาในคลังสินค้า และเครื่องมือปรับปรุงได้</li>
+          </ol>
+        </div>
+
+<div class="tip"><strong>เคสของหลักสูตร:</strong> ทุกบทใช้บริษัทสมมติ <strong>สยามพาร์ท</strong> — ศูนย์กระจายสินค้าเล็ก ๆ ข้างโรงงานประกอบ
+รับชิ้นส่วนเป็นพาเลทจากรถผู้ขาย 6 คันต่อวัน เก็บบนชั้นวาง 150 ช่อง แล้วส่งเข้าไลน์ประกอบ 60 พาเลทต่อวัน
+(ข้อมูลทั้งหมดสมมติขึ้นเพื่อการเรียน)</div>
+
+<h2>เริ่มจากปัญหาจริง: รอ 40 นาที → 0 นาที</h2>
+<p>รถผู้ขาย 6 คันมาถึงพร้อมกันตอน 08:00 ท่ารับมี 2 ท่า ขนลงคันละ 20 นาที คันสุดท้ายต้องรอคิว 40 นาที
+หลายคนคิดว่าต้องสร้างท่ารับเพิ่ม แต่เพิ่มเป็น 3 ท่าก็ยังรอ 23 นาที ทางที่ได้ผลกลับเป็นการ<strong>นัดรถให้มาห่างกัน 80 นาที</strong>
+ไม่ต้องรอเลยและไม่ต้องลงทุน — นี่คือเหตุผลที่การขนส่งกับคลังสินค้าต้องวางแผนไปด้วยกัน</p>
+
+<h2>1. โลจิสติกส์และคลังสินค้า</h2>
+
+<h3>โลจิสติกส์ ≠ ซัพพลายเชน</h3>
+<table>
+<tr><th></th><th>โลจิสติกส์ (Logistics)</th><th>ซัพพลายเชน (Supply Chain)</th></tr>
+<tr><td>คืออะไร</td><td>การวางแผนและควบคุมการไหลของสินค้าและข้อมูล ให้ของถึง ถูกที่ ถูกเวลา ถูกจำนวน ด้วยต้นทุนต่ำ</td>
+<td>ทุกบริษัทที่ต่อกันตั้งแต่วัตถุดิบจนถึงลูกค้าคนสุดท้าย — การจัดการซัพพลายเชนคือประสานทุกบริษัทให้ทำงานเป็นทีม</td></tr>
+<tr><td>ตัวอย่าง</td><td>สยามพาร์ทรับพาเลท เก็บ แล้วส่งเข้าไลน์ภายใน 20 นาที</td>
+<td>ผู้ผลิตชิ้นส่วน → สยามพาร์ท → โรงงานประกอบ → ตัวแทนจำหน่าย → ลูกค้า</td></tr>
+</table>
+<p>โลจิสติกส์เป็นส่วนหนึ่งของการจัดการซัพพลายเชน ถ้าแต่ละบริษัทเก่งแต่ไม่ประสานกัน ทั้งโซ่ก็ยังช้าและแพง</p>
+
+<h3>กิจกรรมหลักของโลจิสติกส์</h3>
+<table>
+<tr><th>กิจกรรม</th><th>ทำอะไร</th><th>ที่สยามพาร์ท</th></tr>
+<tr><td>การจัดหา (Procurement)</td><td>เลือกผู้ขาย สั่งซื้อ ตามของ</td><td>สั่งชิ้นส่วนจากผู้ขาย</td></tr>
+<tr><td>การขนส่ง (Transportation)</td><td>ย้ายของระหว่างสถานที่</td><td>รถผู้ขาย 6 คันต่อวัน</td></tr>
+<tr><td>การคลังสินค้า (Warehousing)</td><td>รับ เก็บ หยิบ ส่ง</td><td>ท่ารับ 2 ท่า ชั้นวาง 150 ช่อง</td></tr>
+<tr><td>สินค้าคงคลัง (Inventory)</td><td>มีของเท่าไร เมื่อไรสั่งเพิ่ม</td><td>เผื่อไว้กี่พาเลท</td></tr>
+<tr><td>การกระจายสินค้า (Distribution)</td><td>ส่งของถึงผู้ใช้</td><td>ส่งพาเลทเข้าไลน์ 60 ครั้งต่อวัน</td></tr>
+</table>
+<p>ทุกกิจกรรมต้องมี<strong>ข้อมูล</strong>เชื่อมกัน เช่น ตารางออเดอร์ ตารางรถเข้า และสต็อก — ในแบบจำลองข้อมูลเหล่านี้อยู่ในตาราง
+<code>Orders</code>, <code>Deliveries</code> และ <code>Products</code></p>
+
+<h3>ในซัพพลายเชนมีของไหล 3 อย่าง</h3>
+<ul>
+<li><strong>สินค้า (Material Flow)</strong> — ไหลจากต้นทางไปหาลูกค้า วัดด้วยเวลา จำนวน และของเสีย</li>
+<li><strong>ข้อมูล (Information Flow)</strong> — ไหลได้ทั้งสองทาง เช่น ออเดอร์ ยอดขาย พยากรณ์ ถ้าข้อมูลช้าหรือผิด ของจะมาผิดเวลา</li>
+<li><strong>เงิน (Financial Flow)</strong> — ไหลย้อนจากลูกค้ากลับไปต้นทาง ของที่ค้างในคลังคือเงินที่จมอยู่</li>
+</ul>
+
+<h3>โลจิสติกส์ของโรงงาน 3 ช่วง</h3>
+<ul>
+<li><strong>ขาเข้า (Inbound)</strong> — รับวัตถุดิบและชิ้นส่วนจากผู้ขาย ตรวจรับ นับ เก็บเข้าคลัง</li>
+<li><strong>ภายใน (Intralogistics)</strong> — ย้ายของภายในคลังและโรงงาน เก็บ หยิบ ป้อนไลน์ผลิต — <strong>หลักสูตรนี้เน้นช่วงนี้</strong>
+ที่สยามพาร์ทคือรับพาเลทจากรถผู้ขาย เก็บบนชั้นวาง แล้วส่งเข้าไลน์ที่อยู่ห่างไป 40 เมตร</li>
+<li><strong>ขาออก (Outbound)</strong> — แพ็ก จัดรถ และส่งสินค้าถึงลูกค้า</li>
+</ul>
+
+<h3>กิจกรรมคลังสินค้า 5 ขั้น</h3>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>รับเข้า (Receiving)</strong> — รถเข้าท่า ขนลง ตรวจนับ (สยามพาร์ท: 20 นาทีต่อคัน)</span></li>
+    <li><span class="num">2</span><span class="text"><strong>จัดเก็บ (Put-away)</strong> — ย้ายเข้าตำแหน่งในชั้นวาง</span></li>
+    <li><span class="num">3</span><span class="text"><strong>หยิบ (Picking)</strong> — หยิบตามออเดอร์ งานที่ใช้คนมากที่สุดในคลังส่วนใหญ่</span></li>
+    <li><span class="num">4</span><span class="text"><strong>แพ็ก (Packing)</strong> — บรรจุ ติดฉลาก (สยามพาร์ทส่งเป็นพาเลท ไม่ต้องแพ็ก)</span></li>
+    <li><span class="num">5</span><span class="text"><strong>จัดส่ง (Shipping)</strong> — ส่งถึงผู้รับ (ส่งเข้าไลน์ภายในเป้า 20 นาที)</span></li>
+  </ol>
+<div class="note"><strong>จุดแรกที่ควรปรับปรุง:</strong> งานหยิบมักใช้แรงงานและเวลามากที่สุด</div>
+
+<h3>กลยุทธ์จัดเก็บ: วางของไว้ที่ไหน</h3>
+<table>
+<tr><th>แบบ</th><th>วิธี</th><th>ข้อดี / ข้อจำกัด</th></tr>
+<tr><td>ตำแหน่งตายตัว (Fixed)</td><td>สินค้าแต่ละรหัสมีช่องประจำ</td><td>หาง่าย คนจำได้ แต่ช่องว่างเมื่อของหมด เปลืองพื้นที่</td></tr>
+<tr><td>ตำแหน่งสุ่ม (Random)</td><td>วางช่องไหนก็ได้ที่ว่าง</td><td>ใช้พื้นที่คุ้ม แต่ต้องมีระบบ (WMS) บอกตำแหน่ง</td></tr>
+<tr><td>ตามกลุ่ม ABC (Class-based)</td><td>สินค้าหยิบบ่อยไว้ใกล้จุดส่ง</td><td>ลดระยะเดินและระยะวิ่งของรถ</td></tr>
+</table>
+<p>ในแบบจำลองสยามพาร์ท แค่ย้ายตำแหน่งสินค้าตาม ABC ระยะเดินต่อวันลดลงประมาณ 70 % — ฝึกจริงในบท
+<a href="../simulation/01.html">2.1</a> และ <a href="../ai/03.html">3.3</a></p>
+
+<h2>2. อุปกรณ์ ระบบ และการขนส่ง</h2>
+
+<h3>ชั้นวางพาเลท 8 แบบ</h3>
+<figure class="screenshot">
+  <a href="../assets/images/logistics/01-01.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/01-01.jpg" alt="ชั้นวางพาเลท 8 แบบ: Selective, VNA, Mobile, Drive-in, Shuttle, Pallet Flow, Push-Back, AS/RS" loading="lazy"></a>
+  <figcaption>ภาพทุกแบบเป็นโมเดล 3 มิติที่ทำไว้สำหรับหลักสูตรนี้ · LIFO = เข้าหลังออกก่อน · FIFO = เข้าก่อนออกก่อน</figcaption>
+</figure>
+<ul>
+<li><strong>Selective</strong> — แบบพื้นฐาน หยิบได้ทุกพาเลท แต่เสียพื้นที่ทางรถมาก</li>
+<li><strong>VNA</strong> — ทางเดินแคบ ใช้รถเฉพาะ ได้ช่องมากขึ้น</li>
+<li><strong>Mobile</strong> — ชั้นวางเลื่อนบนราง เปิดทางเดินทีละช่อง จุมากแต่หยิบช้า</li>
+<li><strong>Drive-in, Shuttle, Push-Back</strong> — เก็บลึกหลายพาเลทต่อช่อง ประหยัดพื้นที่ แต่หยิบได้เฉพาะพาเลทหน้าสุด (LIFO)</li>
+<li><strong>Pallet Flow</strong> — รางลาดให้พาเลทไหลเอง เข้าก่อนออกก่อน (FIFO) เหมาะกับของที่มีวันหมดอายุ</li>
+<li><strong>AS/RS</strong> — คลังอัตโนมัติ มีเครนเก็บและหยิบในชั้นสูง</li>
+</ul>
+
+<h3>พื้นที่เท่ากัน ความจุต่างกันถึง 2.5 เท่า</h3>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/logistics/01-02.jpg" target="_blank" rel="noopener"><img src="../assets/images/logistics/01-02.jpg" alt="จำนวนตำแหน่งพาเลทของชั้นวาง 8 แบบบนพื้นที่ 550 ตารางเมตร" loading="lazy"></a>
+  <figcaption>ตำแหน่งพาเลทบนพื้นที่ 25 × 22 ม. (550 m²) สูงไม่เกิน 9 ม. คำนวณจากกฎผังเดียวกันทุกแบบ</figcaption>
+</figure></div>
+  <div><p><strong>หยิบได้ทุกพาเลท (100 %)</strong><br>Selective · VNA · Mobile · AS/RS</p>
+<p><strong>หยิบได้เฉพาะพาเลทหน้า</strong><br>Drive-in · Shuttle 12 % · Push-Back 25 % · Pallet Flow 7 %</p>
+<p>Drive-in และ Shuttle เก็บได้ 1,440 ตำแหน่ง มากกว่า Selective (588) เกือบ 2.5 เท่า แต่หยิบได้เฉพาะพาเลทหน้า
+และหนึ่งช่องเก็บได้สินค้ารหัสเดียว</p></div>
+</div>
+<div class="note"><strong>จุมาก ≠ ดีที่สุด:</strong> ต้องดูจำนวนรหัสสินค้าและความเร็วที่ต้องหยิบด้วย
+— ผลจำลองความเร็วในการหยิบของแต่ละแบบอยู่ในบท <a href="../ai/01.html">3.1</a></div>
+
+<h3>อุปกรณ์เคลื่อนย้าย: เลือกให้เหมาะกับงาน</h3>
+<table>
+<tr><th>อุปกรณ์</th><th>เหมาะกับ</th><th>ข้อดี</th><th>ข้อจำกัด</th></tr>
+<tr><td>คน + รถลากมือ</td><td>ระยะสั้น ของเบา ปริมาณน้อย</td><td>ลงทุนต่ำ ยืดหยุ่นที่สุด</td><td>ช้า เหนื่อย เสี่ยงบาดเจ็บ</td></tr>
+<tr><td>Forklift</td><td>งานหลากหลาย ยกสูง เส้นทางไม่แน่นอน</td><td>ยืดหยุ่น ราคาเริ่มต้นต่ำ</td><td>ต้องมีคนขับ อุบัติเหตุ ดีเซลปล่อยคาร์บอน</td></tr>
+<tr><td>สายพาน (Conveyor)</td><td>ปริมาณมาก เส้นทางคงที่</td><td>ต่อเนื่อง ใช้คนน้อย</td><td>ย้ายยาก กินพื้นที่ เดินเปล่าเปลืองไฟ</td></tr>
+<tr><td>AGV</td><td>เส้นทางซ้ำ ๆ ตามแถบนำทาง</td><td>อัตโนมัติ คาดเดาได้</td><td>วิ่งตามทางเท่านั้น เปลี่ยนเส้นทางยาก</td></tr>
+<tr><td>AMR</td><td>เส้นทางเปลี่ยนบ่อย มีคนเดินปน</td><td>หาทางเอง หลบสิ่งกีดขวาง ขยายง่าย</td><td>ราคาต่อคันสูง ต้องมีระบบจัดการกลุ่มรถ</td></tr>
+<tr><td>AS/RS</td><td>ของมาก พื้นที่น้อย เก็บสูง</td><td>ประหยัดพื้นที่ แม่นยำ ทำงาน 24 ชม.</td><td>ลงทุนสูง ปรับเปลี่ยนยาก</td></tr>
+</table>
+
+<h3>ระบบสารสนเทศคลังสินค้า: WMS และ WCS</h3>
+<p><strong>ERP</strong> (ระบบองค์กร) → <strong>WMS</strong> (จัดการคลัง) → <strong>WCS</strong> (ควบคุมเครื่องจักร) → เครื่องจักร</p>
+<ul>
+<li><strong>WMS (Warehouse Management System)</strong> — ตอบว่า "อะไร อยู่ที่ไหน เท่าไร" รับออเดอร์ กำหนดตำแหน่งจัดเก็บ สั่งหยิบ นับสต็อก
+และรายงาน KPI — ในแบบจำลองคือตาราง <code>Products</code>, <code>Orders</code> และ WMS ของ AS/RS</li>
+<li><strong>WCS (Warehouse Control System)</strong> — รับคำสั่งจาก WMS แล้วสั่งสายพาน เครน AS/RS หรือหุ่นยนต์ AMR ให้ทำงาน
+— ในแบบจำลองคือ Method ที่สั่งรถวิ่งและหยิบ</li>
+</ul>
+
+<h3>ข้อมูลเข้าระบบได้อย่างไร</h3>
+<table>
+<tr><th>เทคโนโลยี</th><th>ทำอะไร</th><th>ใช้ตอนไหน</th></tr>
+<tr><td>บาร์โค้ด + เครื่องสแกนมือถือ</td><td>อ่านรหัสสินค้า / ตำแหน่ง ส่งเข้า WMS ทันที</td><td>ตรวจรับ · วางเข้าช่อง · หยิบ · นับสต็อก</td></tr>
+<tr><td>RFID</td><td>อ่านป้ายด้วยคลื่นวิทยุ ไม่ต้องเห็นป้าย อ่านทีละหลายชิ้น</td><td>ประตูรับ–ส่ง · นับพาเลททั้งคัน</td></tr>
+<tr><td>Pick-to-Light / Put-to-Light</td><td>ไฟที่ช่องบอกว่าหยิบช่องไหน กี่ชิ้น</td><td>หยิบชิ้นเล็กจำนวนมาก ลดหยิบผิด</td></tr>
+<tr><td>Voice Picking</td><td>สั่งงานด้วยเสียงผ่านหูฟัง มือว่างทำงาน</td><td>หยิบในห้องเย็น / ของหนัก</td></tr>
+<tr><td>Dashboard / กระดาน KPI</td><td>แสดงสถานะงาน สต็อก KPI แบบเวลาจริง</td><td>หัวหน้างานติดตามและตัดสินใจ</td></tr>
+</table>
+<div class="tip"><strong>ข้อมูลในระบบต้องตรงกับของจริง:</strong> สแกนทุกครั้งที่ของเปลี่ยนตำแหน่ง</div>
+
+<h3>การขนส่งกับคลัง: นัดเวลาก่อนคิดลงทุน</h3>
+<p><strong>กรณีศึกษา (สมมติ) บริษัท ช. ศูนย์กระจายสินค้าอาหาร</strong> — รถผู้ขายมาพร้อมกันตอนเช้า รอคิวท่ารับ 2 ชั่วโมง
+ผู้ขายเก็บค่ารอ บริษัทเปลี่ยนเป็นนัดรถตามช่วงเวลา (time slot) ตามกำลังของท่ารับ และแจ้งเวลาล่วงหน้า
+ผลคือรอคิวเหลือ 10 นาทีโดยไม่ต้องสร้างท่าเพิ่ม — ดูรถรับ–ส่งของกับคลังในโรงงานตัวอย่าง Factory 51 ในบท <a href="02.html">1.2</a></p>
+
+<h2>3. ความปลอดภัย ปัญหา และการปรับปรุง</h2>
+
+<h3>Lean Logistics: ส่งบ่อย ทีละน้อย ตามความต้องการจริง</h3>
+<ul>
+<li><strong>Milk Run</strong> — รถวิ่งรอบตามตารางเหมือนรถส่งนม รับ–ส่งหลายจุดในรอบเดียว ลดรถวิ่งเปล่าและของค้างข้างไลน์</li>
+<li><strong>Kanban</strong> — บัตรสัญญาณ ใช้หมดแล้วค่อยเติม ดึงตามความต้องการ (Pull) ไม่ส่งเผื่อเกินจำเป็น</li>
+<li><strong>Supermarket</strong> — จุดพักของข้างไลน์ขนาดเล็ก ไลน์หยิบเอง ทีมโลจิสติกส์เติม</li>
+<li><strong>Just in Time (JIT)</strong> — ได้ของที่ต้องการ ในเวลาและจำนวนที่ต้องการ ต้องมีระบบที่เชื่อถือได้และข้อมูลดี</li>
+</ul>
+
+<h3>เครื่องมือปรับปรุงคลัง</h3>
+<ul>
+<li><strong>5S</strong> — สะสาง สะดวก สะอาด สุขลักษณะ สร้างนิสัย ของที่ไม่ใช้ออกไป ของที่ใช้มีที่ประจำ</li>
+<li><strong>Kaizen</strong> — ปรับปรุงทีละน้อยอย่างต่อเนื่อง ทุกคนเสนอได้ เช่น ย้ายของขายดีมาใกล้จุดส่ง</li>
+<li><strong>Visual Control</strong> — มองแล้วรู้ทันที เช่น ป้ายสีตามกลุ่ม ABC เส้นแบ่งพื้นที่ กระดาน KPI หน้างาน</li>
+<li><strong>Poka-Yoke</strong> — ป้องกันความผิดพลาดตั้งแต่ต้น เช่น ต้องสแกนบาร์โค้ดก่อนวาง ชั้นวางที่ใส่ของผิดช่องไม่ได้</li>
+</ul>
+<p>การปรับปรุงที่ดีต้องวัดผลได้ด้วยตัวเลข ซึ่งเป็นสิ่งที่แบบจำลองช่วยได้</p>
+
+<h3>ความปลอดภัยในคลังสินค้า</h3>
+<ul>
+<li><strong>รถกับคน</strong> — แยกทางเดินรถและคน จำกัดความเร็ว Forklift รถอัตโนมัติต้องมีเซนเซอร์หยุดเมื่อเจอคน</li>
+<li><strong>ชั้นวางและการยก</strong> — ห้ามวางเกินพิกัดน้ำหนัก ตรวจชั้นวางที่ถูกชน ติดตัวกันชนเสา ของหนักไว้ชั้นล่าง</li>
+<li><strong>คนทำงาน</strong> — ท่าทางการยกที่ถูกต้อง (Ergonomics) อุปกรณ์ป้องกัน อบรมคนขับรถ ตรวจสภาพรถทุกวัน</li>
+</ul>
+
+<h3>บริหารปัจจัยเสี่ยง: โอกาสเกิด × ความรุนแรง</h3>
+<p>ระบุอันตราย ให้คะแนนโอกาสเกิดและความรุนแรง 1–5 แล้วคูณกันเป็นคะแนนความเสี่ยง จัดการเรื่องคะแนนสูงก่อน (ตัวเลขเป็นตัวอย่าง)</p>
+<table>
+<tr><th>อันตราย</th><th>โอกาส</th><th>รุนแรง</th><th>คะแนน</th><th>มาตรการ</th></tr>
+<tr><td>Forklift ชนคนที่ทางแยก</td><td>3</td><td>5</td><td><strong>15</strong></td><td>แยกทางเดิน · กระจกโค้ง · จำกัดความเร็ว · AMR ในจุดคนเยอะ</td></tr>
+<tr><td>พาเลทตกจากชั้นบน</td><td>2</td><td>5</td><td>10</td><td>ตรวจพิกัด · ตาข่ายกันตก · ห้ามยืนใต้งา</td></tr>
+<tr><td>ชั้นวางถูกชนจนเสาบิด</td><td>3</td><td>3</td><td>9</td><td>ตัวกันชนเสา · ตรวจชั้นวางทุกเดือน</td></tr>
+<tr><td>ยกของผิดท่า ปวดหลัง</td><td>4</td><td>2</td><td>8</td><td>รถยกช่วย · อบรมท่ายก · หมุนเวียนงาน</td></tr>
+<tr><td>ลื่นล้มจากพื้นเปียก</td><td>2</td><td>2</td><td>4</td><td>5S · ทำความสะอาดทันที · ป้ายเตือน</td></tr>
+</table>
+<div class="note"><strong>คะแนน 12 ขึ้นไป = ต้องแก้ก่อน</strong> · ประเมินใหม่ทุกครั้งที่ทำมาตรการ หรือเปลี่ยนอุปกรณ์หรือผัง</div>
+
+<h3>จัดการสินค้าคงคลังในคลัง: ของในระบบต้องตรงกับของจริง</h3>
+<ul>
+<li><strong>นับสต็อกหมุนเวียน (Cycle Count)</strong> — นับทีละส่วนทุกวัน กลุ่ม A บ่อยกว่า C ไม่ต้องปิดคลังนับทั้งปี</li>
+<li><strong>ความแม่นยำสต็อก</strong> — % ตำแหน่งที่ของจริงตรงกับระบบ เป้าอย่างน้อย 99 %</li>
+<li><strong>FIFO / FEFO</strong> — เข้าก่อนออกก่อน · หมดอายุก่อนออกก่อน กันของเก่าค้าง</li>
+<li><strong>ของค้างนาน (Dead Stock)</strong> — ไม่เคลื่อนไหวเกิน 90 วัน = เงินจมและพื้นที่หาย</li>
+<li><strong>ของเสียหาย / สูญหาย</strong> — แยกพื้นที่ บันทึกสาเหตุ ปรับยอดในระบบทันที</li>
+<li><strong>ระดับสต็อกเหมาะสม</strong> — ไม่ขาด ไม่ล้น คำนวณด้วย ABC · EOQ · จุดสั่งซื้อ ในบท <a href="../simulation/01.html">2.1</a></li>
+</ul>
+
+<h3>ปัญหาที่พบบ่อยในคลังสินค้า และจะฝึกแก้ที่ไหน</h3>
+<table>
+<tr><th>ปัญหา</th><th>สาเหตุ → วิธีแก้</th><th>ฝึกในบท</th></tr>
+<tr><td>ของขาด / ของล้นชั้น</td><td>สั่งไม่ถูกเวลา ไม่ถูกจำนวน → ABC · EOQ · จุดสั่งซื้อ</td><td><a href="../simulation/03.html">2.3</a></td></tr>
+<tr><td>เดินไกล หยิบช้า</td><td>ของขายดีอยู่ไกล → จัดตำแหน่งตาม ABC · GA</td><td><a href="../ai/03.html">3.3</a></td></tr>
+<tr><td>รถรอคิวที่ท่ารับ</td><td>รถมาพร้อมกัน → นัดเวลา</td><td><a href="../simulation/03.html">2.3</a></td></tr>
+<tr><td>งานค้างตอนเลิกงาน</td><td>คนไม่ตรงกับช่วงงานหนัก → ปรับคนและกะ</td><td><a href="../simulation/04.html">2.4</a></td></tr>
+<tr><td>รถขนไม่พอ / เกิน</td><td>ไม่รู้ว่าต้องใช้กี่คัน → จำลองหาจำนวน</td><td><a href="../simulation/06.html">2.6</a></td></tr>
+<tr><td>ข้อมูลไม่ตรงความจริง</td><td>ข้อมูลสกปรก ยอดเปลี่ยน → ทำความสะอาดข้อมูล</td><td><a href="../ai/02.html">3.2</a></td></tr>
+</table>
+
+<h3>ตัวชี้วัด (KPI) โลจิสติกส์ที่ใช้บ่อย</h3>
+<table>
+<tr><th>KPI</th><th>ความหมาย</th><th>ตัวอย่างสยามพาร์ท</th></tr>
+<tr><td>Fill Rate</td><td>สัดส่วนความต้องการที่ส่งได้ทันทีจากของที่มี</td><td>ส่งได้ 60 จาก 60 ออเดอร์ = 100 %</td></tr>
+<tr><td>On-time Delivery</td><td>สัดส่วนการส่งที่ตรงเวลาที่สัญญา</td><td>ส่งเข้าไลน์ภายใน 20 นาที</td></tr>
+<tr><td>Lead Time</td><td>เวลาจากสั่งจนได้ของ</td><td>เฉลี่ย 8.8 นาที (โมเดลที่เสร็จแล้ว)</td></tr>
+<tr><td>Inventory Turnover / Days</td><td>ของหมุนเร็วแค่ไหน / มีของพอใช้กี่วัน</td><td>สต็อก 100 พาเลท ใช้วันละ 60 ≈ 1.7 วัน</td></tr>
+<tr><td>Cost per Order</td><td>ต้นทุนโลจิสติกส์ต่อออเดอร์</td><td>3,610 ÷ 60 ≈ 60 บาท</td></tr>
+<tr><td>kgCO₂e per Order</td><td>คาร์บอนต่อออเดอร์</td><td>0.017 kg (AMR ไฟฟ้า)</td></tr>
+</table>
+<div class="tip"><strong>เคล็ดลับ:</strong> เลือก KPI ไม่กี่ตัวที่สำคัญ แล้ววัดสม่ำเสมอ</div>
+
+        <div class="page-nav">
+          <a href="../start/02.html">← ก่อนหน้า: 0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a>
+          <a href="02.html">ถัดไป: 1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง →</a>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        Intralogistics with Plant Simulation · หลักสูตรระบบการจัดการคลังสินค้าอัตโนมัติ (INTRALOGISTICS)
+      </footer>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="inner">
+      <nav id="menu">
+        <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
+        <ul>
+          <li><a href="../index.html">หน้าแรก</a></li>
+          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li class="has-children">
+            <a href="../start/index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
+            <ul class="submenu">
+              <li><a href="../start/01.html">0.1 ติดตั้ง Plant Simulation 2504</a></li>
+              <li><a href="../start/02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a></li>
+            </ul>
+          </li>
+          <li class="has-children expanded">
+            <a href="index.html">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู logistics">▾</button>
+            <ul class="submenu">
+              <li class="active"><a href="01.html">1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a></li>
+              <li><a href="02.html">1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</a></li>
+              <li><a href="03.html">1.3 สร้างโมเดลแรก: Source → Station → Drain</a></li>
+              <li><a href="04.html">1.4 หาคอขวด (Bottleneck) และแก้ด้วยเครื่องขนาน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../simulation/index.html">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู simulation">▾</button>
+            <ul class="submenu">
+              <li><a href="../simulation/01.html">2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง</a></li>
+              <li><a href="../simulation/02.html">2.2 สร้างคลังสินค้าแรก</a></li>
+              <li><a href="../simulation/03.html">2.3 ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</a></li>
+              <li><a href="../simulation/04.html">2.4 คน และกะทำงาน (Workers & Shifts)</a></li>
+              <li><a href="../simulation/05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
+              <li><a href="../simulation/06.html">2.6 Track และ Transporter (AGV)</a></li>
+              <li><a href="../simulation/07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
+              <li><a href="../simulation/08.html">2.8 Advanced 3D Animation</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../ai/index.html">3. วิเคราะห์ข้อมูลจากแบบจำลองด้วย AI</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู ai">▾</button>
+            <ul class="submenu">
+              <li><a href="../ai/01.html">3.1 แบบจำลอง ข้อมูล และ AI ช่วยตัดสินใจ</a></li>
+              <li><a href="../ai/02.html">3.2 นำเข้าข้อมูล และจำลองสถานการณ์</a></li>
+              <li><a href="../ai/03.html">3.3 หาค่าที่เหมาะสม และ AI คาดการณ์</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../strategy/index.html">4. การจัดการเชิงกลยุทธ์และการตัดสินใจทางวิศวกรรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
+            <ul class="submenu">
+              <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
+              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../evaluation/index.html">5. การวัดและประเมินผล</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู evaluation">▾</button>
+            <ul class="submenu">
+              <li><a href="../evaluation/01.html">5.1 สอบภาคทฤษฎี</a></li>
+              <li><a href="../evaluation/02.html">5.2 สอบภาคปฏิบัติ</a></li>
+            </ul>
+          </li>
+          <li><a href="../post-test.html">แบบทดสอบหลังเรียน และแบบประเมิน</a></li>
+        </ul>
+      </nav>
+      <footer id="footer"><p class="copyright">Intralogistics with Plant Simulation</p></footer>
+    </div>
+  </div>
+  <div id="sidebar-overlay"></div>
+</div>
+<script src="../assets/main.js?v=e223124b"></script>
+</body>
+</html>

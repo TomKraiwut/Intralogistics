@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0.2 โหลดไฟล์ตัวอย่างของหลักสูตร — Intralogistics with Plant Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=d8c72085">
+</head>
+<body>
+<div id="wrapper">
+  <div id="main">
+    <div class="inner">
+      <header id="header">
+        <a href="../index.html" class="logo"><span>Intralogistics with Plant Simulation</span></a>
+        <button class="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      </header>
+
+      <main>
+        <h1>0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</h1>
+        <p class="lead">เริ่มต้น: ติดตั้งโปรแกรม · ภาคปฏิบัติ</p>
+
+        <div class="objectives">
+          <p>วัตถุประสงค์การเรียนรู้</p>
+          <ol>
+          <li>ดาวน์โหลดไฟล์ตัวอย่างของหลักสูตรจาก Google Drive</li>
+          <li>เก็บไฟล์ไว้ในโฟลเดอร์ที่โปรแกรมเปิดได้โดยไม่มีปัญหา</li>
+          <li>เปิดไฟล์โมเดลใน Plant Simulation 2504 เพื่อทดสอบว่าพร้อมเรียน</li>
+          </ol>
+        </div>
+
+<div class="download">
+  <a class="download-btn" href="https://drive.google.com/drive/folders/1k1a3frNfgsbFyR7Rul0bFnxQqvMtbt9f?usp=sharing" target="_blank" rel="noopener">⬇ เปิดโฟลเดอร์ไฟล์ตัวอย่าง (Google Drive)</a>
+  <p>โฟลเดอร์ <code>01_Training_Model</code> — เปิดดูได้โดยไม่ต้องล็อกอิน</p>
+</div>
+
+<h2>1. ดาวน์โหลดไฟล์</h2>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">คลิกปุ่ม <strong>เปิดโฟลเดอร์ไฟล์ตัวอย่าง</strong> ด้านบน</span></li>
+    <li><span class="num">2</span><span class="text">ดาวน์โหลดทั้งโฟลเดอร์: คลิกชื่อโฟลเดอร์ <strong>01_Training_Model</strong> ด้านบนของหน้า แล้วเลือก <strong>Download</strong> — Google Drive จะรวมไฟล์เป็น <code>.zip</code> ให้ (ถ้าไฟล์ใหญ่อาจได้หลาย zip)</span></li>
+    <li><span class="num">3</span><span class="text">ถ้าต้องการบางไฟล์: คลิกขวาที่ไฟล์นั้นแล้วเลือก <strong>Download</strong></span></li>
+  </ol>
+
+<h2>2. เก็บไฟล์ในโฟลเดอร์ที่ถูกต้อง</h2>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">สร้างโฟลเดอร์ <code>C:\PtS_Intralogistics</code></span></li>
+    <li><span class="num">2</span><span class="text">แตกไฟล์ <code>.zip</code> (คลิกขวา → <strong>Extract All…</strong>) ลงในโฟลเดอร์นี้</span></li>
+    <li><span class="num">3</span><span class="text">ตรวจว่าไฟล์ <code>.spp</code> กับไฟล์ข้อมูล (เช่น Excel) ที่มาด้วยกันอยู่ในโฟลเดอร์เดียวกัน</span></li>
+  </ol>
+
+<div class="note"><strong>ระวัง:</strong> อย่าเปิดไฟล์จากในไฟล์ <code>.zip</code> โดยตรง และอย่าเก็บไว้ในโฟลเดอร์ที่ชื่อมีภาษาไทย
+— แบบจำลองที่อ่านไฟล์ข้อมูลจะหาไฟล์จากโฟลเดอร์ของตัวเอง ถ้าแยกไฟล์ไว้คนละที่จะอ่านข้อมูลไม่ได้</div>
+
+<h2>3. เปิดโมเดลทดสอบ</h2>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">เปิด Plant Simulation 2504</span></li>
+    <li><span class="num">2</span><span class="text">คลิกเมนู <strong>File</strong> → <strong>Open</strong> แล้วเลือกไฟล์ <code>.spp</code> ในโฟลเดอร์ <code>C:\PtS_Intralogistics</code></span></li>
+    <li><span class="num">3</span><span class="text">ดับเบิลคลิก Frame ใน Class Library › <strong>Models</strong> เพื่อดูแบบจำลอง</span></li>
+  </ol>
+
+<div class="tip"><strong>ไฟล์ทุกไฟล์บันทึกด้วย Plant Simulation 2504:</strong> เปิดด้วยเวอร์ชัน 2504 หรือใหม่กว่าได้
+แต่ถ้าบันทึกทับด้วยเวอร์ชันใหม่กว่า จะเปิดกลับใน 2504 ไม่ได้ — ระหว่างเรียนให้ใช้ 2504 เท่านั้น</div>
+
+<h2>4. ไฟล์ในโฟลเดอร์</h2>
+<div class="note"><strong>ไฟล์จะทยอยเพิ่ม:</strong> ไฟล์ของแต่ละบทจะเพิ่มเข้าโฟลเดอร์เดิมก่อนวันอบรม
+ใช้ลิงก์เดิมได้ตลอด — ก่อนวันอบรมให้ดาวน์โหลดอีกครั้งเพื่อให้ได้ไฟล์ครบ</div>
+
+        <div class="page-nav">
+          <a href="01.html">← ก่อนหน้า: 0.1 ติดตั้ง Plant Simulation 2504</a>
+          <a href="../logistics/index.html">ถัดไป: 1. หลักการจัดการโลจิสติกส์และซัพพลายเชน →</a>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        Intralogistics with Plant Simulation · หลักสูตรระบบการจัดการคลังสินค้าอัตโนมัติ (INTRALOGISTICS)
+      </footer>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="inner">
+      <nav id="menu">
+        <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
+        <ul>
+          <li><a href="../index.html">หน้าแรก</a></li>
+          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li class="has-children expanded">
+            <a href="index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
+            <ul class="submenu">
+              <li><a href="01.html">0.1 ติดตั้ง Plant Simulation 2504</a></li>
+              <li class="active"><a href="02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../logistics/index.html">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู logistics">▾</button>
+            <ul class="submenu">
+              <li><a href="../logistics/01.html">1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a></li>
+              <li><a href="../logistics/02.html">1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</a></li>
+              <li><a href="../logistics/03.html">1.3 สร้างโมเดลแรก: Source → Station → Drain</a></li>
+              <li><a href="../logistics/04.html">1.4 หาคอขวด (Bottleneck) และแก้ด้วยเครื่องขนาน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../simulation/index.html">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู simulation">▾</button>
+            <ul class="submenu">
+              <li><a href="../simulation/01.html">2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง</a></li>
+              <li><a href="../simulation/02.html">2.2 สร้างคลังสินค้าแรก</a></li>
+              <li><a href="../simulation/03.html">2.3 ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</a></li>
+              <li><a href="../simulation/04.html">2.4 คน และกะทำงาน (Workers & Shifts)</a></li>
+              <li><a href="../simulation/05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
+              <li><a href="../simulation/06.html">2.6 Track และ Transporter (AGV)</a></li>
+              <li><a href="../simulation/07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
+              <li><a href="../simulation/08.html">2.8 Advanced 3D Animation</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../ai/index.html">3. วิเคราะห์ข้อมูลจากแบบจำลองด้วย AI</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู ai">▾</button>
+            <ul class="submenu">
+              <li><a href="../ai/01.html">3.1 แบบจำลอง ข้อมูล และ AI ช่วยตัดสินใจ</a></li>
+              <li><a href="../ai/02.html">3.2 นำเข้าข้อมูล และจำลองสถานการณ์</a></li>
+              <li><a href="../ai/03.html">3.3 หาค่าที่เหมาะสม และ AI คาดการณ์</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../strategy/index.html">4. การจัดการเชิงกลยุทธ์และการตัดสินใจทางวิศวกรรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
+            <ul class="submenu">
+              <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
+              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../evaluation/index.html">5. การวัดและประเมินผล</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู evaluation">▾</button>
+            <ul class="submenu">
+              <li><a href="../evaluation/01.html">5.1 สอบภาคทฤษฎี</a></li>
+              <li><a href="../evaluation/02.html">5.2 สอบภาคปฏิบัติ</a></li>
+            </ul>
+          </li>
+          <li><a href="../post-test.html">แบบทดสอบหลังเรียน และแบบประเมิน</a></li>
+        </ul>
+      </nav>
+      <footer id="footer"><p class="copyright">Intralogistics with Plant Simulation</p></footer>
+    </div>
+  </div>
+  <div id="sidebar-overlay"></div>
+</div>
+<script src="../assets/main.js?v=e223124b"></script>
+</body>
+</html>

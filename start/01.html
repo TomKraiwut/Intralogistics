@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0.1 ติดตั้ง Plant Simulation 2504 — Intralogistics with Plant Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=d8c72085">
+</head>
+<body>
+<div id="wrapper">
+  <div id="main">
+    <div class="inner">
+      <header id="header">
+        <a href="../index.html" class="logo"><span>Intralogistics with Plant Simulation</span></a>
+        <button class="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      </header>
+
+      <main>
+        <h1>0.1 ติดตั้ง Plant Simulation 2504</h1>
+        <p class="lead">เริ่มต้น: ติดตั้งโปรแกรม · ภาคปฏิบัติ</p>
+
+        <div class="objectives">
+          <p>วัตถุประสงค์การเรียนรู้</p>
+          <ol>
+          <li>ตรวจได้ว่าเครื่องของตัวเองพร้อมสำหรับ Plant Simulation 2504</li>
+          <li>ติดตั้งโปรแกรมได้เองจากไฟล์ <code>PlantSimulation2504_Setup.msi</code></li>
+          <li>ตั้งค่า Student License ได้ทั้งตอนเปิดโปรแกรมครั้งแรก และเปลี่ยนภายหลัง</li>
+          </ol>
+        </div>
+
+<div class="tip"><strong>ทำก่อนวันอบรม:</strong> ติดตั้งโปรแกรมและตั้ง License ให้เสร็จก่อนมาเรียน
+ใช้เวลาประมาณ 15–20 นาที — ดาวน์โหลดไฟล์ติดตั้งเก็บลงไดรฟ์ในเครื่องก่อน แล้วค่อยเปิดติดตั้ง</div>
+
+<div class="download">
+  <a class="download-btn" href="https://drive.google.com/file/d/1igXHnUvl60YaBdmGCDzmSc93ZQ0s5QYz/view?usp=sharing" target="_blank" rel="noopener">⬇ ดาวน์โหลดไฟล์ติดตั้ง (Google Drive)</a>
+  <p><code>PlantSimulation2504_Setup.msi</code> ประมาณ 300 MB — Google Drive จะเตือนว่าสแกนไวรัสไฟล์ใหญ่ไม่ได้ ให้คลิก <strong>Download anyway</strong></p>
+</div>
+
+<div class="note"><strong>ติดตั้งบนเครื่องไหน:</strong> คอมพิวเตอร์ส่วนตัวติดตั้งได้เลย ·
+ถ้าเป็นคอมพิวเตอร์ของบริษัท <strong>ต้องแจ้งฝ่าย IT ก่อนติดตั้ง</strong></div>
+
+<h2>1. ความต้องการของเครื่อง</h2>
+<table>
+<tr><th>รายการ</th><th>ที่แนะนำ</th></tr>
+<tr><td>ระบบปฏิบัติการ</td><td>Windows 10 หรือ Windows 11 แบบ 64-bit (<strong>ไม่รองรับ</strong> Windows 7 และ macOS)</td></tr>
+<tr><td>CPU</td><td>Intel Core i5, i7, i9 หรือเทียบเท่า</td></tr>
+<tr><td>หน่วยความจำ (RAM)</td><td>16 GB</td></tr>
+<tr><td>พื้นที่ดิสก์</td><td>ว่างอย่างน้อย 2 GB บน SSD</td></tr>
+<tr><td>หน้าจอ</td><td>1920 × 1080 หรือละเอียดกว่า</td></tr>
+</table>
+
+<p><strong>ถ้าจะใช้ 3D</strong> (ใช้ในบท 2.8 Advanced 3D Animation)</p>
+<ul>
+<li>การ์ดจอต้องรองรับ OpenGL (1.1, 1.5, 3.3 หรือ 4.5) — ใช้ได้ทั้ง NVIDIA, AMD และ Intel</li>
+<li>การ์ดจอ Intel ต้องเป็นรุ่น HD 4600 ขึ้นไป</li>
+<li>ใช้ 3D ได้ครบทุกอย่างเมื่อการ์ดจอรองรับ OpenGL 4.5 ขึ้นไป</li>
+</ul>
+
+<div class="note"><strong>ระวัง:</strong> 3D ใช้ไม่ได้บนเครื่องเสมือน (Virtual Machine) หรือ VDI —
+ถ้าจะเรียนบท 3D ให้ติดตั้งบนเครื่องจริง</div>
+
+<h2>2. ติดตั้ง Plant Simulation 2504</h2>
+<figure class="screenshot">
+  <a href="../assets/images/start/01-01.jpg" target="_blank" rel="noopener"><img src="../assets/images/start/01-01.jpg" alt="ขั้นตอนติดตั้ง Plant Simulation 2504 ทั้ง 5 ขั้น" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">ดับเบิลคลิกไฟล์ <code>PlantSimulation2504_Setup.msi</code></span></li>
+    <li><span class="num">2</span><span class="text">หน้า Welcome คลิก <strong>Next</strong></span></li>
+    <li><span class="num">3</span><span class="text">หน้า Destination Folder ใช้โฟลเดอร์ที่ตั้งไว้ <code>C:\Program Files\Siemens\Tecnomatix Plant Simulation 2504\</code> แล้วคลิก <strong>Next</strong></span></li>
+    <li><span class="num">4</span><span class="text">หน้า Ready to install คลิก <strong>Install</strong> — ถ้า Windows ถามสิทธิ์ผู้ดูแลเครื่อง (รูปโล่บนปุ่ม) ให้คลิก <strong>Yes</strong></span></li>
+    <li><span class="num">5</span><span class="text">รอจนขึ้นหน้า Completed แล้วคลิก <strong>Finish</strong> — บนหน้าจอ Desktop จะมีไอคอน <strong>Plant Simulation 2504</strong></span></li>
+  </ol>
+
+<div class="note"><strong>ติดตั้งไม่ผ่าน:</strong> การติดตั้งต้องใช้สิทธิ์ผู้ดูแลเครื่อง (Administrator)
+— ถ้าเป็นเครื่องของบริษัทแล้วคลิก Install ไม่ได้ ให้ฝ่าย IT ติดตั้งให้</div>
+
+<h2>3. ตั้งค่า Student License</h2>
+<p>Student License ใช้ได้ฟรีสำหรับการเรียนรู้ส่วนตัว ตั้งได้ 2 ทาง:
+ตอนเปิดโปรแกรมครั้งแรก (3.1) หรือเปลี่ยนภายหลังจากเมนู (3.2)</p>
+
+<div class="note"><strong>ข้อจำกัดของ Student License:</strong>
+แบบจำลองหนึ่งตัวมี Object ได้ <strong>ไม่เกิน 80 ตัว</strong> ·
+ใช้เพื่อการเรียนเท่านั้น ห้ามใช้กับงานโครงการของบริษัท งานรับจ้าง หรืองานเชิงพาณิชย์ และโอนสิทธิ์ให้ผู้อื่นไม่ได้</div>
+
+<div class="tip"><strong>ใช้กับหลักสูตรนี้ได้ครบ:</strong> แบบจำลองทุกไฟล์ของหลักสูตรมี Object ไม่เกิน 80 ตัว
+จึงเปิดและรันด้วย Student License ได้ทุกบท</div>
+
+<h3>3.1 เปิดโปรแกรมครั้งแรก</h3>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/start/01-02.jpg" target="_blank" rel="noopener"><img src="../assets/images/start/01-02.jpg" alt="หน้าต่าง License Setup ตอนเปิดโปรแกรมครั้งแรก" loading="lazy"></a>
+</figure></div>
+  <div><ol class="step-list">
+    <li><span class="num">1</span><span class="text">ดับเบิลคลิกไอคอน <strong>Plant Simulation 2504</strong> บน Desktop</span></li>
+    <li><span class="num">2</span><span class="text">หน้าต่าง <strong>License Setup</strong> ขึ้นมา เพราะยังไม่มี License — คลิกปุ่มล่างสุด <strong>I am a student and want to use a free student license where I can use the software with some limitations.</strong></span></li>
+  </ol></div>
+</div>
+
+<h3>3.2 เปลี่ยน License ภายหลัง</h3>
+<p>ใช้เมื่อปิดหน้าต่าง License Setup ไปแล้ว หรือเคยเลือก License แบบอื่นไว้</p>
+<figure class="screenshot">
+  <a href="../assets/images/start/01-03.jpg" target="_blank" rel="noopener"><img src="../assets/images/start/01-03.jpg" alt="ตั้ง License Type เป็น Student ในหน้าต่าง Preferences" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">เปิด Plant Simulation 2504</span></li>
+    <li><span class="num">2</span><span class="text">คลิกเมนู <strong>File</strong></span></li>
+    <li><span class="num">3</span><span class="text">คลิก <strong>Preferences</strong></span></li>
+    <li><span class="num">4</span><span class="text">คลิกแท็บ <strong>License</strong></span></li>
+    <li><span class="num">5</span><span class="text">ช่อง <strong>License Type</strong> เลือก <strong>Student</strong></span></li>
+    <li><span class="num">6</span><span class="text">คลิก <strong>OK</strong></span></li>
+  </ol>
+
+<h2>ตรวจว่าพร้อมเรียน</h2>
+<ul>
+<li>เปิด Plant Simulation 2504 ได้ และไม่มีหน้าต่าง License Setup ขึ้นมาอีก</li>
+<li>ไปต่อที่ <a href="02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a> แล้วเปิดโมเดลแรกทดสอบ</li>
+</ul>
+
+        <div class="page-nav">
+          <a href="../pre-test.html">← ก่อนหน้า: แบบทดสอบก่อนเรียน</a>
+          <a href="02.html">ถัดไป: 0.2 โหลดไฟล์ตัวอย่างของหลักสูตร →</a>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        Intralogistics with Plant Simulation · หลักสูตรระบบการจัดการคลังสินค้าอัตโนมัติ (INTRALOGISTICS)
+      </footer>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="inner">
+      <nav id="menu">
+        <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
+        <ul>
+          <li><a href="../index.html">หน้าแรก</a></li>
+          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li class="has-children expanded">
+            <a href="index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
+            <ul class="submenu">
+              <li class="active"><a href="01.html">0.1 ติดตั้ง Plant Simulation 2504</a></li>
+              <li><a href="02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../logistics/index.html">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู logistics">▾</button>
+            <ul class="submenu">
+              <li><a href="../logistics/01.html">1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a></li>
+              <li><a href="../logistics/02.html">1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</a></li>
+              <li><a href="../logistics/03.html">1.3 สร้างโมเดลแรก: Source → Station → Drain</a></li>
+              <li><a href="../logistics/04.html">1.4 หาคอขวด (Bottleneck) และแก้ด้วยเครื่องขนาน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../simulation/index.html">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู simulation">▾</button>
+            <ul class="submenu">
+              <li><a href="../simulation/01.html">2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง</a></li>
+              <li><a href="../simulation/02.html">2.2 สร้างคลังสินค้าแรก</a></li>
+              <li><a href="../simulation/03.html">2.3 ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</a></li>
+              <li><a href="../simulation/04.html">2.4 คน และกะทำงาน (Workers & Shifts)</a></li>
+              <li><a href="../simulation/05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
+              <li><a href="../simulation/06.html">2.6 Track และ Transporter (AGV)</a></li>
+              <li><a href="../simulation/07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
+              <li><a href="../simulation/08.html">2.8 Advanced 3D Animation</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../ai/index.html">3. วิเคราะห์ข้อมูลจากแบบจำลองด้วย AI</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู ai">▾</button>
+            <ul class="submenu">
+              <li><a href="../ai/01.html">3.1 แบบจำลอง ข้อมูล และ AI ช่วยตัดสินใจ</a></li>
+              <li><a href="../ai/02.html">3.2 นำเข้าข้อมูล และจำลองสถานการณ์</a></li>
+              <li><a href="../ai/03.html">3.3 หาค่าที่เหมาะสม และ AI คาดการณ์</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../strategy/index.html">4. การจัดการเชิงกลยุทธ์และการตัดสินใจทางวิศวกรรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
+            <ul class="submenu">
+              <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
+              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../evaluation/index.html">5. การวัดและประเมินผล</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู evaluation">▾</button>
+            <ul class="submenu">
+              <li><a href="../evaluation/01.html">5.1 สอบภาคทฤษฎี</a></li>
+              <li><a href="../evaluation/02.html">5.2 สอบภาคปฏิบัติ</a></li>
+            </ul>
+          </li>
+          <li><a href="../post-test.html">แบบทดสอบหลังเรียน และแบบประเมิน</a></li>
+        </ul>
+      </nav>
+      <footer id="footer"><p class="copyright">Intralogistics with Plant Simulation</p></footer>
+    </div>
+  </div>
+  <div id="sidebar-overlay"></div>
+</div>
+<script src="../assets/main.js?v=e223124b"></script>
+</body>
+</html>

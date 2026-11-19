@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ — Intralogistics with Plant Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=d8c72085">
+</head>
+<body>
+<div id="wrapper">
+  <div id="main">
+    <div class="inner">
+      <header id="header">
+        <a href="../index.html" class="logo"><span>Intralogistics with Plant Simulation</span></a>
+        <button class="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      </header>
+
+      <main>
+        <h1>2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</h1>
+        <p class="lead">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation · ภาคทฤษฎี</p>
+
+        <div class="objectives">
+          <p>วัตถุประสงค์การเรียนรู้</p>
+          <ol>
+          <li>เปรียบเทียบระบบขนถ่าย คน, Forklift, AGV, AMR และ AS/RS และบอกว่าแต่ละแบบสร้างด้วย Object อะไรได้</li>
+          <li>อธิบายการป้อนข้อมูลสินค้าเข้า–ออก การใช้ Method และการแสดงข้อมูลสินค้าคงคลังในแบบจำลองได้</li>
+          <li>ตรวจแบบจำลองด้วย Verification และ Validation ก่อนนำผลไปใช้ตัดสินใจได้</li>
+          </ol>
+        </div>
+
+<h2>เริ่มจากตัวเลข: Forklift 3 คัน → 1 คัน</h2>
+<p>สยามพาร์ทใช้ Forklift 3 คันมานาน ไม่มีใครเคยวัดว่ารถทำงานจริงกี่เปอร์เซ็นต์ของเวลา พอจำลองพบว่าลดเหลือคันเดียวก็ยังส่งทันเป้า 20 นาที
+<strong>ประหยัดได้ปีละ 650,000 บาท</strong> — ก่อนคิดซื้อ AGV หรือ AMR ต้องรู้ก่อนว่าระบบเดิมใช้งานได้เต็มที่หรือยัง</p>
+
+<h2>1. คนและรถขน</h2>
+
+<h3>บันไดสู่คลังอัตโนมัติ: เปลี่ยนทีละขั้น วัดทุกขั้น</h3>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>คน</strong> — เดินขนด้วยรถลาก ยืดหยุ่น ลงทุนต่ำ</span></li>
+    <li><span class="num">2</span><span class="text"><strong>Forklift</strong> — ยกพาเลท เร็วขึ้น แต่ต้องมีคนขับ</span></li>
+    <li><span class="num">3</span><span class="text"><strong>AGV</strong> — อัตโนมัติ วิ่งตามเส้นทางที่กำหนด</span></li>
+    <li><span class="num">4</span><span class="text"><strong>AMR</strong> — อัตโนมัติ หาเส้นทางเอง หลบคน</span></li>
+    <li><span class="num">5</span><span class="text"><strong>AS/RS</strong> — เครนเก็บและหยิบในชั้นสูงเอง</span></li>
+  </ol>
+<div class="tip"><strong>ทุกขั้นวัดด้วย KPI เดียวกัน:</strong> ส่งครบ · lead time · utilization · ต้นทุน · คาร์บอน
+— ภาคปฏิบัติจะสร้างและเทียบทุกขั้นบนงานเดียวกัน</div>
+
+<h3>ลำเลียงสินค้าด้วยคน: WorkerPool · Broker</h3>
+<ul>
+<li><strong>WorkerPool</strong> — ห้องพักของพนักงาน กำหนดจำนวนคนและความเร็วเดิน และผูกกับกะทำงาน (ShiftCalendar)</li>
+<li><strong>Broker</strong> — คนกลางจับคู่งานกับคน เมื่อมีงาน ส่งคนที่ว่างไป คนเดียวทำได้หลายจุด</li>
+<li><strong>ผลที่วัดได้</strong> — utilization ของคน เวลารอคน งานค้างตอนเลิกงาน และระยะเดินต่อวัน</li>
+</ul>
+<p>ในแบบจำลองรุ่นทดลอง คนไม่ตรงกับช่วงงานหนักทำให้พาเลทค้าง 11 พาเลทตอนเลิกงาน — ฝึกในบท <a href="04.html">2.4</a></p>
+
+<h3>Forklift และ AGV: รถที่วิ่งบนเส้นทาง</h3>
+<table>
+<tr><th></th><th>Forklift</th><th>AGV</th></tr>
+<tr><td>สร้างในโปรแกรม</td><td>Transporter บน Track (ทางวิ่ง)</td><td>Transporter บน Track แบบวงรอบทางเดียว</td></tr>
+<tr><td>ลักษณะ</td><td>ตั้งความเร็ว เวลายก–วาง ต้องมีคนขับ พักเที่ยงรถหยุด (ผูกกับกะ)</td>
+<td>วิ่งตามเส้นทางที่กำหนดเท่านั้น ช้ากว่าแต่ไม่ต้องมีคนขับ ทำงานได้ต่อเนื่อง</td></tr>
+<tr><td>คาร์บอน</td><td>ดีเซล → นับลิตร เป็นคาร์บอน Scope 1</td><td>ไฟฟ้า → นับ kWh เป็นคาร์บอน Scope 2</td></tr>
+</table>
+<p>วาด Track และให้รถ Transporter วิ่งขนชิ้นงาน — ฝึกในบท <a href="06.html">2.6</a></p>
+
+<h3>AMR: หุ่นยนต์ที่หาเส้นทางเอง</h3>
+<div class="side-by-side">
+  <div><p><strong>วิธีสร้างในโปรแกรม</strong></p>
+<ul>
+<li>รถวิ่งอิสระบนพื้นที่ ไม่ต้องวาดทาง</li>
+<li>หาเส้นทางสั้นที่สุดเอง หลบสิ่งกีดขวาง</li>
+<li>Method สั่ง: ไปรับที่ไหน ส่งที่ไหน</li>
+<li>แบตเตอรี่: kWh = Ah × V ÷ 1,000</li>
+</ul></div>
+  <div><p><strong>คำถามที่แบบจำลองตอบ</strong></p>
+<ul>
+<li>ต้องใช้กี่คันจึงทันเป้า</li>
+<li>รถรอกันตรงไหน (จุดคอขวด)</li>
+<li>ต้องชาร์จเมื่อไร แบตเตอรี่พอทั้งกะไหม</li>
+<li>เวลายก–วางมีผลแค่ไหน</li>
+</ul></div>
+</div>
+<p>ในแบบจำลองสยามพาร์ท AMR คันเดียวไม่พอ สองคันพอ — ฝึกสร้าง AMR ในบท <a href="07.html">2.7</a></p>
+
+<h3>Forklift · AGV · AMR บนงานเดียวกัน</h3>
+<p>วัดจากแบบจำลองสยามพาร์ท งาน 120 เที่ยวต่อวัน</p>
+<table>
+<tr><th>รถ</th><th>ลักษณะ</th><th>ต้องใช้</th><th>lead time</th><th>ต้นทุน/วัน (บาท)</th><th>kgCO₂e/ออเดอร์</th></tr>
+<tr><td>Forklift ดีเซล</td><td>2.5 ม./วินาที · ต้องมีคนขับ · พักเที่ยงรถหยุด</td><td>1 คัน</td><td>14.7 นาที</td><td>2,986</td><td>0.130</td></tr>
+<tr><td>AGV</td><td>1.0 ม./วินาที · วิ่งตามวงรอบทางเดียว</td><td>2 คัน</td><td>14.8 นาที</td><td>3,618</td><td>0.030</td></tr>
+<tr><td>AMR</td><td>1.2 ม./วินาที · หาทางสั้นสุดเอง</td><td>2 คัน</td><td>8.8 นาที</td><td>3,610</td><td>0.017</td></tr>
+</table>
+<div class="note"><strong>ไม่มีรถแบบไหนชนะทุกเกณฑ์:</strong> Forklift ต้นทุนต่ำสุดแต่ปล่อยคาร์บอนมากกว่า AMR เกือบ 8 เท่าและต้องมีคนขับ
+AMR ให้ lead time ดีที่สุด → ต้องตัดสินด้วยหลายเกณฑ์ในบท <a href="../strategy/01.html">4.1</a></div>
+
+<h2>2. ข้อมูล Method และสต็อก</h2>
+
+<h3>การป้อนข้อมูลสินค้าเข้า–ออก</h3>
+<table>
+<tr><th>ข้อมูล</th><th>หน้าตาตาราง</th><th>ใส่ที่ไหนในแบบจำลอง</th></tr>
+<tr><td>สินค้าเข้า (รถผู้ขาย)</td><td>เวลา · ชื่อรถ · รหัสสินค้า · จำนวนพาเลท</td><td>Source → Delivery table (ตาราง <code>Deliveries</code>)</td></tr>
+<tr><td>สินค้าออก (ออเดอร์)</td><td>เวลา · เลขออเดอร์ · รหัสสินค้า · จำนวน</td><td>ตาราง <code>Orders</code> → Method หยิบตามเวลา</td></tr>
+<tr><td>ข้อมูลสินค้า</td><td>รหัส · กลุ่ม ABC · ยอดใช้ · EOQ · ROP · ช่องเก็บ</td><td>ตาราง <code>Products</code></td></tr>
+<tr><td>สต็อกตั้งต้น</td><td>จำนวนพาเลทต่อรหัสตอนเริ่มวัน</td><td>Method <code>Init</code> เติมชั้นวางก่อนเริ่ม</td></tr>
+<tr><td>ข้อมูลจากระบบจริง</td><td>ไฟล์ Excel / CSV จาก WMS หรือ ERP</td><td>นำเข้าตาราง (ฝึกในบท <a href="../ai/02.html">3.2</a>)</td></tr>
+</table>
+<div class="tip"><strong>แยกข้อมูลไว้ในตาราง:</strong> เปลี่ยนสถานการณ์ได้โดยไม่ต้องแก้แบบจำลอง</div>
+
+<h3>Method กับแบบจำลองคลัง: กฎการทำงานที่ทำให้โมเดลคิดได้</h3>
+<div class="side-by-side">
+  <div><p><strong>Method ในคลังของเราทำอะไร</strong></p>
+<ul>
+<li><code>Init</code> — เติมสต็อกตั้งต้นตอนเริ่ม</li>
+<li>เก็บเข้าช่อง — เลือกช่องว่างตามกลยุทธ์</li>
+<li>หยิบ — หาพาเลทของสินค้าที่สั่ง แล้วส่งออก</li>
+<li>สั่งซื้อ — สต็อก ≤ ROP → สั่ง EOQ และบันทึก <code>StockLog</code></li>
+</ul></div>
+  <div><p><strong>ผู้เรียนต้องรู้แค่ไหน</strong></p>
+<ul>
+<li>เขียน Method สั้น ๆ 5–10 บรรทัดตามบทเรียน ไม่ต้องเป็นโปรแกรมเมอร์</li>
+<li>ภาษา SimTalk: <code>if</code> · <code>for</code> · <code>ตาราง[คอลัมน์, แถว]</code></li>
+<li>Method ยาว ๆ ของรถอัตโนมัติมีให้ในไฟล์พร้อมใช้ เปิดอ่านได้</li>
+<li>ผู้ช่วย AI ช่วยอธิบายหรือแก้ Method ได้</li>
+</ul></div>
+</div>
+<div class="note"><strong>หลักการ:</strong> Method = กฎการทำงาน เขียนสั้นเท่าที่จำเป็น และทดสอบทุกครั้งที่แก้</div>
+
+<h3>แสดงข้อมูลสินค้าคงคลัง: ให้คนดูเข้าใจทันที</h3>
+<table>
+<tr><th>แบบ</th><th>แสดงอะไร</th><th>ใช้ทำอะไร</th></tr>
+<tr><td>กราฟ (Chart)</td><td>ระดับสต็อกตามเวลา (ฟันเลื่อย) · utilization ของคน / รถ</td><td>ตรวจว่าแบบจำลองทำงานถูก</td></tr>
+<tr><td>ตาราง (<code>StockLog</code>)</td><td>บันทึกทุกครั้งที่ของเข้า–ออก</td><td>นำออกไป Excel วิเคราะห์ต่อ หรือใช้สอน AI</td></tr>
+<tr><td>ตัวเลขบนหน้าจอ</td><td>สต็อกปัจจุบันต่อรหัส · ของขาด · กระดาน KPI</td><td>เห็นระหว่างรัน</td></tr>
+<tr><td>สีใน 3D</td><td>ชั้นวางเปลี่ยนสีตามสินค้า / ABC</td><td>เห็นช่องว่าง ช่องเต็ม ผู้บริหารเข้าใจเร็ว</td></tr>
+</table>
+<p>เลือกแบบที่เหมาะกับคนดู: ทีมงานดูตาราง ผู้บริหารดูกราฟและภาพ</p>
+
+<h2>3. AS/RS · 3D · ตรวจแบบจำลอง</h2>
+
+<h3>AS/RS ด้วย Library HBW</h3>
+<div class="side-by-side">
+  <div><figure class="screenshot">
+  <a href="../assets/images/simulation/05-01.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/05-01.jpg" alt="โมเดล 3 มิติของ AS/RS พร้อมเครนและสายพานเข้า–ออก" loading="lazy"></a>
+  <figcaption>โมเดล 3 มิติของ AS/RS ที่ทำไว้สำหรับหลักสูตร</figcaption>
+</figure></div>
+  <div><p><strong>ส่วนประกอบใน Library HBW</strong></p>
+<ul>
+<li><strong>RackLane</strong> — ชั้นวางสูงพร้อมเครน สยามพาร์ท 150 ช่อง (15 คอลัมน์ × 5 ชั้น × 2 ด้าน)</li>
+<li><strong>เครน (RSU / Stacker Crane)</strong> — วิ่งเก็บและหยิบเอง ตั้งความเร็วแกน X / Z</li>
+<li><strong>WMS ของ AS/RS</strong> — เลือกช่องเก็บแบบ One by one · Random · XYZ (โซนตามสินค้า)</li>
+<li>สั่งนำออกตามออเดอร์ · I/O conveyor หน้าชั้นวาง</li>
+</ul></div>
+</div>
+<p>ในแบบจำลองสยามพาร์ท เครนทำงานแค่ประมาณ 12 % ของเวลา เพราะงานวันละ 120 รอบน้อยมากสำหรับเครน เปลี่ยนกลยุทธ์จัดเก็บจึงแทบไม่มีผล
+ประโยชน์จริงที่นี่คือคนไม่ต้องหยิบ จึงลดพนักงานได้ 1 คน — ฝึก Library HBW ในบท <a href="02.html">2.2</a> และ <a href="03.html">2.3</a></p>
+<div class="note"><strong>หาคอขวดก่อน:</strong> ปรับจุดที่ไม่ใช่คอขวดไม่ได้อะไร</div>
+
+<h3>ชั้นวางแต่ละแบบ สร้างเป็น Object อะไรใน Plant Simulation</h3>
+<table>
+<tr><th>ชั้นวาง</th><th>Object</th><th>การหยิบ</th><th>เรื่องที่แบบจำลองแสดงได้</th></tr>
+<tr><td>Selective</td><td>Store (X = bay, Y = ชั้น)</td><td>หยิบได้ทุกพาเลท</td><td>พื้นฐาน · ทางรถ 3.5 ม.</td></tr>
+<tr><td>VNA</td><td>Store + รถ VNA</td><td>หยิบได้ทุกพาเลท</td><td>ทางแคบ ช่องมาก รถช้าลง</td></tr>
+<tr><td>Mobile</td><td>Store + เวลาเปิดทางเดิน</td><td>ต้องรอเปิดทาง</td><td>จุมาก แต่หยิบได้ช้า</td></tr>
+<tr><td>Drive-in / Push-Back</td><td>Buffer แบบ Stack</td><td>LIFO</td><td>1 ช่อง = 1 รหัส · ช่องว่างใช้ไม่ได้</td></tr>
+<tr><td>Shuttle</td><td>Buffer Stack / Queue + รถ shuttle</td><td>LIFO หรือ FIFO</td><td>รถในช่องเป็นคอขวดไหม</td></tr>
+<tr><td>Pallet Flow</td><td>Buffer แบบ Queue + เวลาไหล</td><td>FIFO</td><td>ของมีวันหมดอายุ</td></tr>
+<tr><td>AS/RS</td><td>Library HBW: RackLane + WMS</td><td>หยิบได้ทุกพาเลท</td><td>เครน · กลยุทธ์จัดเก็บ</td></tr>
+</table>
+
+<h3>Advanced 3D Animation: จากโมเดล CAD สู่ภาพเคลื่อนไหว</h3>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/05-02.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/05-02.jpg" alt="โมเดล CAD ของชั้นวาง 4 แบบสำหรับทำ 3D Animation" loading="lazy"></a>
+  <figcaption>1 Selective Rack นำเข้าจาก CAD (STEP) เป็นกราฟิก 3D ของ Store · 2 AS/RS + I/O เครนและสายพานขยับตามแบบจำลอง · 3 รถในช่องทาง เห็นรถรอกันในทางแคบ · 4 ชิ้นส่วนที่ขยับได้ งา / shuttle มีแกนเคลื่อนที่</figcaption>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">ส่งออกจาก CAD เป็นไฟล์ STEP เป็นชุดเล็ก ๆ เช่น ชั้นวาง 1 bay</span></li>
+    <li><span class="num">2</span><span class="text">นำเข้าเป็นกราฟิก 3D ของ Object ใน Plant Simulation</span></li>
+    <li><span class="num">3</span><span class="text">ชิ้นที่ต้องขยับ เช่น เครนหรืองา ตั้งเป็นชิ้นที่มีแกนเคลื่อนที่</span></li>
+    <li><span class="num">4</span><span class="text">ตั้งมุมกล้อง ทางกล้อง แล้วบันทึกวิดีโอ</span></li>
+  </ol>
+<div class="note"><strong>ระวัง:</strong> อย่านำเข้าทั้งฉากใหญ่ทีเดียว แบบจำลองจะช้ามาก — ฝึกกับ Selective และ AS/RS ในบท <a href="08.html">2.8</a></div>
+
+<h3>ตรวจแบบจำลองก่อนเชื่อ: Verification และ Validation</h3>
+<table>
+<tr><th>Verification · สร้างถูกไหม</th><th>Validation · ถูกโมเดลไหม</th></tr>
+<tr><td>
+<ul>
+<li>ดูพาเลทวิ่งถูกทางในภาพ 3D</li>
+<li>ตรวจสมดุล: รับเข้า = ส่งออก + สต็อกที่เพิ่ม</li>
+<li>ลองค่าสุดโต่ง เช่น รถ 0 คัน ต้องส่งไม่ได้</li>
+<li>สยามพาร์ท: สต็อกเริ่ม 100 จบ 100 ✔</li>
+</ul></td>
+<td>
+<ul>
+<li>เทียบ KPI กับข้อมูลที่วัดจากหน้างาน</li>
+<li>ต่างไม่เกิน ±10 % จึงใช้ตัดสินใจได้</li>
+<li>ตัวอย่าง: lead time −7 % · คน −5 % · รถ −7 % ✔</li>
+<li>ถ้าต่างมาก: กลับไปดูข้อมูลหรือกฎที่ขาด</li>
+</ul></td></tr>
+</table>
+<div class="note"><strong>กรณีศึกษา (สมมติ) บริษัท ฎ.:</strong> ใช้แบบจำลองที่ไม่เคยเทียบกับข้อมูลจริง จึงซื้อเครื่องเกินจำเป็น
+— แบบจำลองที่ไม่ได้ตรวจ อันตรายกว่าไม่มีแบบจำลอง</div>
+
+        <div class="page-nav">
+          <a href="04.html">← ก่อนหน้า: 2.4 คน และกะทำงาน (Workers & Shifts)</a>
+          <a href="06.html">ถัดไป: 2.6 Track และ Transporter (AGV) →</a>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        Intralogistics with Plant Simulation · หลักสูตรระบบการจัดการคลังสินค้าอัตโนมัติ (INTRALOGISTICS)
+      </footer>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="inner">
+      <nav id="menu">
+        <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
+        <ul>
+          <li><a href="../index.html">หน้าแรก</a></li>
+          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li class="has-children">
+            <a href="../start/index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
+            <ul class="submenu">
+              <li><a href="../start/01.html">0.1 ติดตั้ง Plant Simulation 2504</a></li>
+              <li><a href="../start/02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../logistics/index.html">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู logistics">▾</button>
+            <ul class="submenu">
+              <li><a href="../logistics/01.html">1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a></li>
+              <li><a href="../logistics/02.html">1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</a></li>
+              <li><a href="../logistics/03.html">1.3 สร้างโมเดลแรก: Source → Station → Drain</a></li>
+              <li><a href="../logistics/04.html">1.4 หาคอขวด (Bottleneck) และแก้ด้วยเครื่องขนาน</a></li>
+            </ul>
+          </li>
+          <li class="has-children expanded">
+            <a href="index.html">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู simulation">▾</button>
+            <ul class="submenu">
+              <li><a href="01.html">2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง</a></li>
+              <li><a href="02.html">2.2 สร้างคลังสินค้าแรก</a></li>
+              <li><a href="03.html">2.3 ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</a></li>
+              <li><a href="04.html">2.4 คน และกะทำงาน (Workers & Shifts)</a></li>
+              <li class="active"><a href="05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
+              <li><a href="06.html">2.6 Track และ Transporter (AGV)</a></li>
+              <li><a href="07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
+              <li><a href="08.html">2.8 Advanced 3D Animation</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../ai/index.html">3. วิเคราะห์ข้อมูลจากแบบจำลองด้วย AI</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู ai">▾</button>
+            <ul class="submenu">
+              <li><a href="../ai/01.html">3.1 แบบจำลอง ข้อมูล และ AI ช่วยตัดสินใจ</a></li>
+              <li><a href="../ai/02.html">3.2 นำเข้าข้อมูล และจำลองสถานการณ์</a></li>
+              <li><a href="../ai/03.html">3.3 หาค่าที่เหมาะสม และ AI คาดการณ์</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../strategy/index.html">4. การจัดการเชิงกลยุทธ์และการตัดสินใจทางวิศวกรรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
+            <ul class="submenu">
+              <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
+              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../evaluation/index.html">5. การวัดและประเมินผล</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู evaluation">▾</button>
+            <ul class="submenu">
+              <li><a href="../evaluation/01.html">5.1 สอบภาคทฤษฎี</a></li>
+              <li><a href="../evaluation/02.html">5.2 สอบภาคปฏิบัติ</a></li>
+            </ul>
+          </li>
+          <li><a href="../post-test.html">แบบทดสอบหลังเรียน และแบบประเมิน</a></li>
+        </ul>
+      </nav>
+      <footer id="footer"><p class="copyright">Intralogistics with Plant Simulation</p></footer>
+    </div>
+  </div>
+  <div id="sidebar-overlay"></div>
+</div>
+<script src="../assets/main.js?v=e223124b"></script>
+</body>
+</html>

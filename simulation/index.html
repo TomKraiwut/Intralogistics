@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation — Intralogistics with Plant Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=d8c72085">
+</head>
+<body>
+<div id="wrapper">
+  <div id="main">
+    <div class="inner">
+      <header id="header">
+        <a href="../index.html" class="logo"><span>Intralogistics with Plant Simulation</span></a>
+        <button class="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      </header>
+
+      <main>
+        <h1>2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</h1>
+        <p class="lead">ทฤษฎี : ปฏิบัติ = 2 : 7 ชั่วโมง</p>
+        <p style="max-width:46em;">หัวใจของหลักสูตร: คำนวณสินค้าคงคลัง แล้วสร้างแบบจำลองคลังสินค้าใน Plant Simulation 2504 ด้วยตัวเอง ตั้งแต่คลังเปล่าจนถึงระบบอัตโนมัติ — คน, Forklift, AGV, AMR, AS/RS (Library HBW) และ 3D Animation</p>
+
+        <div class="card-grid">
+          <a href="01.html" class="card">
+            <div class="icon number">2.1</div>
+            <h3>สินค้าคงคลัง และแบบจำลองเสมือนจริง</h3>
+            <p><strong>ทฤษฎี</strong> · ABC, EOQ, Safety Stock, ROP, การจัดวางสินค้า และ Object ใน Plant Simulation ที่แทนอุปกรณ์จริง</p>
+          </a>
+          <a href="02.html" class="card">
+            <div class="icon number">2.2</div>
+            <h3>สร้างคลังสินค้าแรก</h3>
+            <p><strong>ปฏิบัติ</strong> · เพิ่ม Library HBW วาด Conveyor วาง RackLane + WMS รัน 8 ชม. หาคอขวด แล้วฝึกแก้ 3 ปัญหา: sensor userSetTarget, RSU 2 m/s, คลังเต็ม</p>
+          </a>
+          <a href="03.html" class="card">
+            <div class="icon number">2.3</div>
+            <h3>ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</h3>
+            <p><strong>ปฏิบัติ</strong> · HBW H05–H12: รอบการนำออก สินค้า 2 ชนิด กลยุทธ์จัดเก็บ 4 แบบ Method Init / OrderControl และสถิติ RSU เมื่อเครื่องเสีย</p>
+          </a>
+          <a href="04.html" class="card">
+            <div class="icon number">2.4</div>
+            <h3>คน และกะทำงาน (Workers & Shifts)</h3>
+            <p><strong>ปฏิบัติ</strong> · Workplace / WorkerPool / Broker จำนวนคน ความเร็ว กะทำงาน ผัง I กับ U คนขนของ ช่างตั้งเครื่อง และช่างซ่อม (94 → 356 ชิ้น/ชม.)</p>
+          </a>
+          <a href="05.html" class="card">
+            <div class="icon number">2.5</div>
+            <h3>ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</h3>
+            <p><strong>ทฤษฎี</strong> · คน, Forklift, AGV, AMR, AS/RS และ 3D — แต่ละแบบใช้ Object อะไร และวัดผลอะไร</p>
+          </a>
+          <a href="06.html" class="card">
+            <div class="icon number">2.6</div>
+            <h3>Track และ Transporter (AGV)</h3>
+            <p><strong>ปฏิบัติ</strong> · วาด Track วงปิดให้รถ Transporter วิ่ง ใช้ PickAndPlace โหลด / ขนถ่ายชิ้นงานโดยไม่เขียน Method และ TwoLaneTrack รถวิ่งสวน 2 เลน</p>
+          </a>
+          <a href="07.html" class="card">
+            <div class="icon number">2.7</div>
+            <h3>AMR ด้วย AGVPool และ GAWizard</h3>
+            <p><strong>ปฏิบัติ</strong> · AMR วิ่งอิสระด้วย AGVPool + Marker สั่งรถด้วย Method หาจำนวนรถที่พอดี แล้วใช้ GAWizard หาเส้นทางที่สั้นที่สุด</p>
+          </a>
+          <a href="08.html" class="card">
+            <div class="icon number">2.8</div>
+            <h3>Advanced 3D Animation</h3>
+            <p><strong>ปฏิบัติ</strong> · จัดผัง 3D นำเข้าชั้นวาง 3D และทำภาพ / วิดีโอสำหรับนำเสนอ</p>
+          </a>
+        </div>
+
+        <div class="page-nav">
+          <a href="../logistics/index.html">← ก่อนหน้า: 1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+          <a href="01.html">เริ่ม 2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง →</a>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        Intralogistics with Plant Simulation · หลักสูตรระบบการจัดการคลังสินค้าอัตโนมัติ (INTRALOGISTICS)
+      </footer>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="inner">
+      <nav id="menu">
+        <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
+        <ul>
+          <li><a href="../index.html">หน้าแรก</a></li>
+          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li class="has-children">
+            <a href="../start/index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
+            <ul class="submenu">
+              <li><a href="../start/01.html">0.1 ติดตั้ง Plant Simulation 2504</a></li>
+              <li><a href="../start/02.html">0.2 โหลดไฟล์ตัวอย่างของหลักสูตร</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../logistics/index.html">1. หลักการจัดการโลจิสติกส์และซัพพลายเชน</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู logistics">▾</button>
+            <ul class="submenu">
+              <li><a href="../logistics/01.html">1.1 โลจิสติกส์ ซัพพลายเชน และการจัดการคลังสินค้า</a></li>
+              <li><a href="../logistics/02.html">1.2 Factory 51: ระบบสารสนเทศ อุปกรณ์เคลื่อนย้าย และการขนส่ง</a></li>
+              <li><a href="../logistics/03.html">1.3 สร้างโมเดลแรก: Source → Station → Drain</a></li>
+              <li><a href="../logistics/04.html">1.4 หาคอขวด (Bottleneck) และแก้ด้วยเครื่องขนาน</a></li>
+            </ul>
+          </li>
+          <li class="has-children expanded active">
+            <a href="index.html">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู simulation">▾</button>
+            <ul class="submenu">
+              <li><a href="01.html">2.1 สินค้าคงคลัง และแบบจำลองเสมือนจริง</a></li>
+              <li><a href="02.html">2.2 สร้างคลังสินค้าแรก</a></li>
+              <li><a href="03.html">2.3 ป้อนข้อมูลสินค้าเข้า – ออก, Method และการแสดงข้อมูลสินค้าคงคลัง</a></li>
+              <li><a href="04.html">2.4 คน และกะทำงาน (Workers & Shifts)</a></li>
+              <li><a href="05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
+              <li><a href="06.html">2.6 Track และ Transporter (AGV)</a></li>
+              <li><a href="07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
+              <li><a href="08.html">2.8 Advanced 3D Animation</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../ai/index.html">3. วิเคราะห์ข้อมูลจากแบบจำลองด้วย AI</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู ai">▾</button>
+            <ul class="submenu">
+              <li><a href="../ai/01.html">3.1 แบบจำลอง ข้อมูล และ AI ช่วยตัดสินใจ</a></li>
+              <li><a href="../ai/02.html">3.2 นำเข้าข้อมูล และจำลองสถานการณ์</a></li>
+              <li><a href="../ai/03.html">3.3 หาค่าที่เหมาะสม และ AI คาดการณ์</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../strategy/index.html">4. การจัดการเชิงกลยุทธ์และการตัดสินใจทางวิศวกรรม</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
+            <ul class="submenu">
+              <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
+              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+            </ul>
+          </li>
+          <li class="has-children">
+            <a href="../evaluation/index.html">5. การวัดและประเมินผล</a>
+            <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู evaluation">▾</button>
+            <ul class="submenu">
+              <li><a href="../evaluation/01.html">5.1 สอบภาคทฤษฎี</a></li>
+              <li><a href="../evaluation/02.html">5.2 สอบภาคปฏิบัติ</a></li>
+            </ul>
+          </li>
+          <li><a href="../post-test.html">แบบทดสอบหลังเรียน และแบบประเมิน</a></li>
+        </ul>
+      </nav>
+      <footer id="footer"><p class="copyright">Intralogistics with Plant Simulation</p></footer>
+    </div>
+  </div>
+  <div id="sidebar-overlay"></div>
+</div>
+<script src="../assets/main.js?v=e223124b"></script>
+</body>
+</html>
