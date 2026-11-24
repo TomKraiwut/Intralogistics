@@ -67,7 +67,7 @@ SECTIONS = {
         "hub": "strategy.html",
         "chapters": [
             "กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน",
-            "ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน",
+            "เช่าหรือซื้อ Forklift และข้อเสนอการลงทุน",
         ],
         "kinds": ["ท", "ป"],
     },
@@ -84,7 +84,7 @@ SECTIONS = {
             "ระบบขนถ่ายในคลังสินค้าอัตโนมัติ",
             "Track และ Transporter (AGV)",
             "AMR ด้วย AGVPool และ GAWizard",
-            "Advanced 3D Animation",
+            "3D Factory and Warehouse",
         ],
         "kinds": ["ท", "ป", "ป", "ป", "ท", "ป", "ป", "ป"],
     },
@@ -134,9 +134,25 @@ DOWNLOAD_BASE = "https://github.com/TomKraiwut/Intralogistics/releases/latest/do
 # Pre-/post-test pages, written by gen_quiz.py. "form" is the Google Form .../viewform link;
 # empty = the page says the test is not open yet.
 QUIZ_PAGES = {
-    "pre-test.html": {"title": "แบบทดสอบก่อนเรียน", "form": ""},
-    "post-test.html": {"title": "แบบทดสอบหลังเรียน และแบบประเมิน", "form": ""},
+    "pre-test.html": {"title": "แบบสอบถามและแบบทดสอบก่อนเรียน",
+                      "form": "https://docs.google.com/forms/d/e/1FAIpQLSea3o1QKozY-y4-mNjBneSvaEsgTwFQymrup_KyraeD_ca90g/viewform"},
+    "post-test.html": {"title": "แบบทดสอบหลังเรียน และแบบประเมิน",
+                       "form": "https://docs.google.com/forms/d/e/1FAIpQLSfTttgwAS4pnv1EJhxrf13UebGSuc55ytMG2kaCKZbMf_I1YA/viewform"},
 }
+# Exam forms (5.1 theory quiz, 5.2 practical answer sheet) from _No_Upload/exam/ExamCode.gs -> createExams; empty = not open yet.
+EXAM_FORMS = {
+    "theory": "https://docs.google.com/forms/d/e/1FAIpQLSds7UH4TXfUCrgfr-_K2tMSXlFmxf3GZbNVR_LqVASoYCxRtA/viewform",
+    "practical": "https://docs.google.com/forms/d/e/1FAIpQLScrX3OF5AktG39rHZTy47XfOJ-ktoSUc5UlLpooh-92zv9i1g/viewform",
+}
+
+
+def form_embed(url, label="แบบทดสอบ"):
+    """Google Form block for a page: note when the link is empty, else button + embedded form."""
+    if not url:
+        return ('<div class="note"><strong>ยังไม่เปิดให้ทำ:</strong> ผู้สอนจะเปิดฟอร์มและแจ้งเมื่อเริ่มสอบ</div>')
+    embed = url + ("&" if "?" in url else "?") + "embedded=true"
+    return (f'<div class="download"><a class="download-btn" href="{url}" target="_blank" rel="noopener">เปิด{label}ในหน้าต่างใหม่</a></div>'
+            f'<div class="form-embed"><iframe src="{embed}" title="{label}" loading="lazy">กำลังโหลด…</iframe></div>')
 
 
 def _chapter_stem(idx):
@@ -311,7 +327,7 @@ HUB_INTRO = {
     "strategy": "วิเคราะห์เชิงกลยุทธ์และตัดสินใจลงทุนระบบอัตโนมัติในคลังสินค้า โดยใช้ตัวเลขจากแบบจำลอง — "
                 "ต้นทุนตลอดอายุการใช้งาน ระยะเวลาคืนทุน NPV IRR การให้คะแนนหลายเกณฑ์ ความเสี่ยง และต้นทุนคาร์บอน",
     "simulation": "หัวใจของหลักสูตร: คำนวณสินค้าคงคลัง แล้วสร้างแบบจำลองคลังสินค้าใน Plant Simulation 2504 ด้วยตัวเอง "
-                  "ตั้งแต่คลังเปล่าจนถึงระบบอัตโนมัติ — คน, Forklift, AGV, AMR, AS/RS (Library HBW) และ 3D Animation",
+                  "ตั้งแต่คลังเปล่าจนถึงระบบอัตโนมัติ — คน, Forklift, AGV, AMR, AS/RS (Library HBW) และโรงงาน / คลังสินค้า 3D",
     "ai": "ใช้แบบจำลองเสมือนจริงเป็นแหล่งข้อมูลให้ AI — นำเข้าและเตรียมข้อมูล จำลองสถานการณ์ หาค่าที่เหมาะสมด้านพื้นที่จัดเก็บ "
           "การจัดวางสินค้า และสินค้าคงคลัง แล้วนำผลมาประกอบการตัดสินใจปรับปรุงคลังสินค้า",
     "evaluation": "ประเมินความรู้และความสามารถทั้งภาคทฤษฎีและภาคปฏิบัติ — ผ่านหลักสูตรเมื่อเวลาเรียนไม่น้อยกว่าร้อยละ 80 "
@@ -331,7 +347,7 @@ HUB_CARD_DESC = {
     ],
     "strategy": [
         "วิเคราะห์สภาพแวดล้อม, Make or Buy, TCO, คืนทุน, NPV, IRR, หลายเกณฑ์, ความไว และคาร์บอนเครดิต",
-        "เทียบทางเลือกระบบขนถ่ายจากผลแบบจำลอง วิเคราะห์ความไว ให้คะแนน และทำข้อเสนอการลงทุนต่อผู้บริหาร",
+        "เช่าหรือซื้อ Forklift: ใช้แบบจำลองหาจำนวนรถเมื่อปริมาณงานเปลี่ยน แล้วเทียบต้นทุน 5 ปี ตัดสินใจ 3 วิธี และทำข้อเสนอต่อผู้บริหาร",
     ],
     "simulation": [
         "ABC, EOQ, Safety Stock, ROP, การจัดวางสินค้า และ Object ใน Plant Simulation ที่แทนอุปกรณ์จริง",
@@ -341,12 +357,12 @@ HUB_CARD_DESC = {
         "คน, Forklift, AGV, AMR, AS/RS และ 3D — แต่ละแบบใช้ Object อะไร และวัดผลอะไร",
         "วาด Track วงปิดให้รถ Transporter วิ่ง ใช้ PickAndPlace โหลด / ขนถ่ายชิ้นงานโดยไม่เขียน Method และ TwoLaneTrack รถวิ่งสวน 2 เลน",
         "AMR วิ่งอิสระด้วย AGVPool + Marker สั่งรถด้วย Method หาจำนวนรถที่พอดี แล้วใช้ GAWizard หาเส้นทางที่สั้นที่สุด",
-        "จัดผัง 3D นำเข้าชั้นวาง 3D และทำภาพ / วิดีโอสำหรับนำเสนอ",
+        "สร้างผนัง ชั้นวาง ชั้นลอย บันได นำเข้าไฟล์ 3D ติดโลโก้บนผนัง และวางผัง DWG โปร่งแสงใต้แบบจำลอง",
     ],
     "ai": [
         "แบบจำลองกับการตัดสินใจ การรวบรวมข้อมูล AI วิเคราะห์และคาดการณ์ และเทคนิคหาค่าที่เหมาะสม",
-        "นำเข้าข้อมูลออเดอร์จาก Excel ทำความสะอาดข้อมูล และจำลองหลายสถานการณ์ด้วย ExperimentManager",
-        "หาค่าที่เหมาะสมด้านพื้นที่จัดเก็บ การจัดวางสินค้า สินค้าคงคลัง และใช้ AI คาดการณ์ผลลัพธ์",
+        "อ่านตารางรถเข้าจาก Excel ให้ Source สร้างพาเลทตามเวลา แล้วใช้ ExperimentManager หาจำนวน Forklift ที่พอดีกับงาน",
+        "ใช้ GAWizard จัดวางสินค้าให้คนหยิบเดินน้อยที่สุด และสอน NeuralNet จากผลการทดลองเพื่อทำนายผลชุดที่ไม่ได้รัน",
     ],
     "evaluation": [
         "ขอบเขตและรูปแบบการสอบภาคทฤษฎีของทุกหัวข้อ",

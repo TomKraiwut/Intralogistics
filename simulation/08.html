@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2.8 Advanced 3D Animation — Intralogistics with Plant Simulation</title>
+<title>2.8 3D Factory and Warehouse — Intralogistics with Plant Simulation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="../assets/style.css?v=d8c72085">
@@ -18,27 +18,139 @@
       </header>
 
       <main>
-        <h1>2.8 Advanced 3D Animation</h1>
+        <h1>2.8 3D Factory and Warehouse</h1>
         <p class="lead">2. สินค้าคงคลังและแบบจำลองเสมือนจริงด้วย Plant Simulation · ภาคปฏิบัติ</p>
 
         <div class="objectives">
           <p>วัตถุประสงค์การเรียนรู้</p>
           <ol>
-          <li>จัดผังแบบจำลองคลังสินค้าใน 3D ได้</li>
-          <li>นำเข้าชั้นวาง 3D เข้า Plant Simulation ได้</li>
-          <li>ทำภาพและวิดีโอจากแบบจำลองเพื่อนำเสนอได้</li>
+          <li>สร้างผนังโรงงาน ชั้นวาง ชั้นลอย บันได และรั้ว ด้วย Insert Shape ในหน้าต่าง 3D ได้</li>
+          <li>ใช้ Graphic Structure แก้ชิ้นส่วน 3D และเปิดดูสิ่งกีดขวาง (Obstacles) ของคนงานได้</li>
+          <li>นำเข้าไฟล์ 3D (JT, STEP ฯลฯ) และติดรูปภาพบนผนังด้วย Textured Plate ได้</li>
+          <li>นำเข้าผัง DWG เป็นพื้น ล็อกไม่ให้เลื่อน และปรับให้โปร่งแสงได้</li>
           </ol>
         </div>
 
-<h2>หัวข้อในบทนี้</h2>
-<ul>
-  <li>หน้าจอ 3D และการจัดผัง</li>
-  <li>นำเข้าชั้นวาง 3D (Selective Rack / AS/RS)</li>
-  <li>ภาพและวิดีโอสำหรับนำเสนอผู้บริหาร</li>
-</ul>
-<div class="note">
-<strong>กำลังจัดทำ:</strong> บทนี้กำลังเรียบเรียงบน Plant Simulation 2504 พร้อมภาพหน้าจอทีละขั้นและไฟล์ตัวอย่าง
+<p class="lead" style="max-width:46em;">แบบจำลองจากบทก่อน ๆ ทำงานได้แล้ว บทนี้ทำให้<strong>ดูเหมือนโรงงานและคลังสินค้าจริง</strong>ในหน้าต่าง 3D —
+สร้างผนัง ชั้นวาง ชั้นลอย และบันไดด้วยเมาส์ นำเข้าไฟล์ 3D ติดป้ายหรือโลโก้บนผนัง แล้ววางผัง DWG ของโรงงานไว้ใต้แบบจำลอง
+ภาพ 3D ที่ดีช่วยให้ผู้บริหารและหน้างานเข้าใจผลจำลองได้ทันที</p>
+
+<div class="tip">
+<strong>สิ่งที่ต้องมี:</strong> Plant Simulation 2504 · แบบจำลองที่เปิดหน้าต่าง 3D ได้ (เช่น จากบท <a href="04.html">2.4</a>)
+· ไฟล์ผัง DWG ของโรงงาน (ในภาพใช้ <code>2D_Layout.dwg</code>) · รูปภาพโลโก้หรือป้าย (.jpg / .png)
 </div>
+
+<h2>ภาพรวม: 6 ขั้น</h2>
+<table>
+<tr><th>ขั้นที่</th><th>เรื่อง</th><th>ได้อะไร</th></tr>
+<tr><td>1</td><td>Create 3D Factory</td><td>ผนังโรงงาน ชั้นวาง ชั้นลอย บันได รั้ว จาก Insert Shape</td></tr>
+<tr><td>2</td><td>Edit 3D Structure และ Obstacles</td><td>ลบชิ้นส่วนที่ไม่ต้องการ ดูว่าคนงานเดินผ่านตรงไหนไม่ได้</td></tr>
+<tr><td>3</td><td>Import Graphics</td><td>อาคารหรือเครื่องจักรจากไฟล์ 3D</td></tr>
+<tr><td>4</td><td>Textured Plate</td><td>โลโก้หรือป้ายติดผนัง</td></tr>
+<tr><td>5</td><td>Import DWG</td><td>ผังโรงงาน 2D เป็นพื้น ล็อกไว้ไม่ให้เลื่อน</td></tr>
+<tr><td>6</td><td>Set Transparency</td><td>ผังโปร่งแสง มองเห็นแบบจำลองชัดขึ้น</td></tr>
+</table>
+<div class="tip"><strong>default กับ deco:</strong> ของตกแต่ง 3D ทุกชิ้นอยู่ใน <strong>Graphic group</strong> ของเฟรม —
+<code>deco (internal)</code> เก็บในไฟล์ .spp (ผนัง ชั้นวาง ป้าย) ส่วน <code>default (external)</code> ใช้กับไฟล์ที่นำเข้า เช่น ผัง DWG
+ดูและแก้ได้ที่ <code>Show Graphic Structure</code></div>
+
+<h2>ขั้นที่ 1: Create 3D Factory — ผนัง ชั้นวาง ชั้นลอย</h2>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/08-01.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/08-01.jpg" alt="Insert Shape แท็บ Edit, หน้าต่าง Create Factory Walls, Graphic Structure และโรงงาน 3D" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">เปิดหน้าต่าง 3D ของเฟรม แล้วเลือกแท็บ <code>Edit</code> (กลุ่ม <code>3D</code>)</span></li>
+    <li><span class="num">2</span><span class="text">คลิกลูกศร ▾ ของกลุ่ม <code>Insert Shape</code> เพื่อดูรูปทรงทั้งหมด</span></li>
+    <li><span class="num">3</span><span class="text">เลือก <code>Factory Walls</code> — ในกลุ่มเดียวกันมี <code>Rack</code>, <code>Mezzanine</code> (ชั้นลอย), <code>Stairs</code>, <code>Fence</code>, <code>Barred Area</code> และ <code>Dimensioning</code></span></li>
+    <li><span class="num">4</span><span class="text">หน้าต่าง <code>Create Factory Walls</code>: Graphic group <code>deco (internal)</code> · Dimension X <strong>25 m</strong>, Y <strong>10 m</strong>, Z <strong>5 m</strong> · Thickness <strong>0.3 m</strong> · เลือกสีผนัง กระจก และกรอบ → <code>Create</code></span></li>
+    <li><span class="num">5</span><span class="text">คลิกขวาที่<strong>ที่ว่าง</strong>ในหน้าต่าง 3D (ไม่ใช่บนวัตถุ)</span></li>
+    <li><span class="num">6</span><span class="text">เลือก <code>Show Graphic Structure</code></span></li>
+    <li><span class="num">7</span><span class="text">ใน <code>.Models.Model › deco</code> จะเห็นชิ้นที่สร้าง: [1] Factory Walls, [2] Rack, [3] Mezzanine, [4] Stairs, [5] Fence — กด &gt; เพื่อดูชิ้นย่อย</span></li>
+    <li><span class="num">8</span><span class="text">ผล: โรงงานมีผนังและหน้าต่าง ชั้นวาง ชั้นลอยพร้อมราวกันตก และบันไดขึ้นชั้นลอย</span></li>
+  </ol>
+<div class="tip"><strong>วางแล้วค่อยปรับ:</strong> รูปทรงทุกชิ้นลากย้ายได้ในหน้าต่าง 3D และแก้ขนาดหรือตำแหน่งละเอียดได้ที่
+คลิกขวา › <code>Edit 3D Properties...</code> (Ctrl+3)</div>
+
+<h2>ขั้นที่ 2: Edit 3D Structure และ Show Obstacles</h2>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/08-02.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/08-02.jpg" alt="ลบชิ้นราวกันตกใน Graphic Structure และ Obstacles สีแดงในหน้าต่าง 3D" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text"><strong>ลบชิ้นส่วนย่อย:</strong> ใน Graphic Structure ขยายชิ้นที่ต้องการ (เช่น ราวของ Mezzanine) คลิกขวาที่ชิ้นย่อย (เช่น [14]) › <code>Delete</code> — ใช้เปิดช่องราวตรงที่บันไดขึ้นมาถึงชั้นลอย</span></li>
+    <li><span class="num">2</span><span class="text"><strong>ดูสิ่งกีดขวาง:</strong> แท็บ <code>View</code> › <code>Obstacles</code> (Show Obstacles, ปุ่มลัด O) — พื้นที่สีแดงคือที่คนงานเดินผ่านไม่ได้</span></li>
+    <li><span class="num">3</span><span class="text">หน้าต่าง <code>Worker Walking Heights</code> บอกจำนวนสิ่งกีดขวางแต่ละระดับ — ในภาพ: พื้น 0.00 m มี 10 ชิ้น, ชั้นลอย 2.50 m มี 25 ชิ้น</span></li>
+  </ol>
+<div class="note"><strong>ผนังและชั้นวางเป็นสิ่งกีดขวางของคนงาน:</strong> ในภาพ คนงาน (WorkerPool + Broker แบบบท <a href="04.html">2.4</a>)
+เดินอ้อมผนังและใช้บันไดขึ้นชั้นลอย — ถ้าลบหรือย้ายชิ้น 3D เส้นทางเดินและเวลาเดินจะเปลี่ยนด้วย ตรวจด้วย Obstacles ทุกครั้ง</div>
+
+<h2>ขั้นที่ 3: Import Graphics — นำเข้าไฟล์ 3D</h2>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/08-03.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/08-03.jpg" alt="Import Graphics, หน้าต่าง Open โฟลเดอร์ jt-graphics และรายการชนิดไฟล์ที่รองรับ" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">แท็บ <code>Edit</code> › <code>Import Graphics</code></span></li>
+    <li><span class="num">2</span><span class="text">ไปที่โฟลเดอร์ตัวอย่างของโปรแกรม <code>C:\Program Files\Siemens\Tecnomatix Plant Simulation 2504\3D\jt-graphics</code> (ภาพเป็นโฟลเดอร์ของรุ่น 2201 — ใน 2504 มีไฟล์ชุดเดียวกัน)</span></li>
+    <li><span class="num">3</span><span class="text">เลือก <code>Building</code> › <code>Open</code> — ได้อาคารพร้อมเสาและผนังกั้นห้อง</span></li>
+  </ol>
+<p>ชนิดไฟล์ที่นำเข้าได้: JT, Parasolid, IGES, STEP, VRML, STL, CATIA V4 และ CAD Layout (DGN, DWG, DXF) — ไฟล์ STEP จากโปรแกรม CAD ใช้ได้เลย</p>
+
+<h2>ขั้นที่ 4: Textured Plate — ติดโลโก้หรือป้ายบนผนัง</h2>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/08-04.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/08-04.jpg" alt="หน้าต่าง Create Textured Plate และการหมุนแผ่นภาพขึ้นติดผนังด้วย Edit 3D Properties" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">แท็บ <code>Edit</code></span></li>
+    <li><span class="num">2</span><span class="text"><code>Insert Shape</code> › <code>Textured Plate</code> (แผ่นที่มีรูปภาพ)</span></li>
+    <li><span class="num">3</span><span class="text">Graphic Group <code>deco (internal)</code></span></li>
+    <li><span class="num">4</span><span class="text">Image: คลิกไอคอนโฟลเดอร์ เลือกรูป .jpg / .png ของโลโก้หรือป้าย</span></li>
+    <li><span class="num">5</span><span class="text">Orientation <code>Floor (on XY Plane)</code> · Size X <strong>10 m</strong> · Thickness 0.1 m · Texture: ☑ Use Transparency, ● Fit Texture to Plate</span></li>
+    <li><span class="num">6</span><span class="text"><code>Create</code> — แผ่นภาพวางราบบนพื้น</span></li>
+    <li><span class="num">7</span><span class="text">คลิกขวาที่แผ่นภาพ › <code>Edit 3D Properties...</code></span></li>
+    <li><span class="num">8</span><span class="text">แท็บ <code>Transformation</code> › Rotation: Angle <strong>90°</strong>, Axis X = 1 → แผ่นตั้งขึ้น แล้วใส่ Position X, Y, Z ให้ชิดผนัง (ในภาพ 14, 21, 4.19 m) → <code>OK</code></span></li>
+  </ol>
+
+<h2>ขั้นที่ 5: Import DWG — ผังโรงงานเป็นพื้น</h2>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/08-05.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/08-05.jpg" alt="Import Graphics ไฟล์ 2D_Layout.dwg, หน้าต่าง Insert Layout Graphic และล็อกกลุ่ม default" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">แท็บ <code>Edit</code></span></li>
+    <li><span class="num">2</span><span class="text"><code>Import Graphics</code></span></li>
+    <li><span class="num">3</span><span class="text">เลือกไฟล์ผัง <code>2D_Layout.dwg</code></span></li>
+    <li><span class="num">4</span><span class="text">หน้าต่าง <code>Insert Layout Graphic</code>: Graphic group <code>default (external)</code> · Default unit ตามหน่วยที่เขียนแบบไว้ (ในภาพ <code>cm</code>) · Corrective scaling 1</span></li>
+    <li><span class="num">5</span><span class="text"><code>OK</code> — ผังวางเป็นพื้นของเฟรม</span></li>
+    <li><span class="num">6</span><span class="text">คลิกขวาที่ว่าง › <code>Show Graphic Structure</code></span></li>
+    <li><span class="num">7</span><span class="text">ขยาย <code>Model1</code> จะเห็น <code>default</code> › [1] 2D_Layout</span></li>
+    <li><span class="num">8</span><span class="text">คลิกขวาที่กลุ่ม <code>default</code></span></li>
+    <li><span class="num">9</span><span class="text">เลือก <code>Locked</code> — ผังจะไม่ขยับเวลาคลิกหรือลากวัตถุที่อยู่บนผัง</span></li>
+  </ol>
+<div class="note"><strong>หน่วยต้องตรงกับแบบ:</strong> ถ้าผังที่นำเข้ามาใหญ่หรือเล็กผิดปกติ 10 หรือ 100 เท่า แปลว่าเลือก Default unit ผิด
+(mm / cm / m) — ลบแล้วนำเข้าใหม่ แล้ววัดความยาวผนังที่รู้ขนาดเทียบดู</div>
+
+<h2>ขั้นที่ 6: Set Transparency — ผังโปร่งแสง</h2>
+<figure class="screenshot">
+  <a href="../assets/images/simulation/08-06.jpg" target="_blank" rel="noopener"><img src="../assets/images/simulation/08-06.jpg" alt="Edit 3D Properties ของ 2D_Layout แท็บ Material ตั้ง Transparency 0.5" loading="lazy"></a>
+</figure>
+<ol class="step-list">
+    <li><span class="num">1</span><span class="text">คลิกขวาที่ว่าง › <code>Show Graphic Structure</code></span></li>
+    <li><span class="num">2</span><span class="text">ขยาย <code>default</code> แล้วเลือก <code>[1] 2D_Layout</code></span></li>
+    <li><span class="num">3</span><span class="text">คลิกขวา › <code>Edit 3D Properties...</code></span></li>
+    <li><span class="num">4</span><span class="text">แท็บ <code>Material</code></span></li>
+    <li><span class="num">5</span><span class="text">☑ <code>Material active</code></span></li>
+    <li><span class="num">6</span><span class="text">Transparency <strong>0.5</strong> (0 = ทึบ, 1 = ใสหมด)</span></li>
+    <li><span class="num">7</span><span class="text"><code>OK</code> — ผังจางลง วัตถุและรถที่วิ่งบนผังเด่นขึ้น</span></li>
+  </ol>
+
+<h2>สรุป</h2>
+<table>
+<tr><th>อยากได้</th><th>ใช้</th></tr>
+<tr><td>ผนัง ชั้นวาง ชั้นลอย บันได รั้ว</td><td><code>Edit › Insert Shape</code> (Factory Walls, Rack, Mezzanine, Stairs, Fence)</td></tr>
+<tr><td>แก้ / ลบชิ้นย่อย</td><td>คลิกขวาที่ว่าง › <code>Show Graphic Structure</code></td></tr>
+<tr><td>รู้ว่าคนงานเดินผ่านตรงไหนไม่ได้</td><td><code>View › Obstacles</code></td></tr>
+<tr><td>อาคาร / เครื่องจักรจาก CAD</td><td><code>Edit › Import Graphics</code> (JT, STEP, STL …)</td></tr>
+<tr><td>โลโก้ ป้าย</td><td><code>Textured Plate</code> + หมุน 90° รอบแกน X</td></tr>
+<tr><td>ผังโรงงาน 2D</td><td><code>Import Graphics</code> ไฟล์ DWG → กลุ่ม <code>default</code> → <code>Locked</code> → Transparency</td></tr>
+</table>
 
         <div class="page-nav">
           <a href="07.html">← ก่อนหน้า: 2.7 AMR ด้วย AGVPool และ GAWizard</a>
@@ -58,7 +170,7 @@
         <header class="major"><button class="sidebar-close" aria-label="ปิดเมนู">✕</button><h2>เมนู</h2></header>
         <ul>
           <li><a href="../index.html">หน้าแรก</a></li>
-          <li><a href="../pre-test.html">แบบทดสอบก่อนเรียน</a></li>
+          <li><a href="../pre-test.html">แบบสอบถามและแบบทดสอบก่อนเรียน</a></li>
           <li class="has-children">
             <a href="../start/index.html">เริ่มต้น: ติดตั้งโปรแกรม</a>
             <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู start">▾</button>
@@ -88,7 +200,7 @@
               <li><a href="05.html">2.5 ระบบขนถ่ายในคลังสินค้าอัตโนมัติ</a></li>
               <li><a href="06.html">2.6 Track และ Transporter (AGV)</a></li>
               <li><a href="07.html">2.7 AMR ด้วย AGVPool และ GAWizard</a></li>
-              <li class="active"><a href="08.html">2.8 Advanced 3D Animation</a></li>
+              <li class="active"><a href="08.html">2.8 3D Factory and Warehouse</a></li>
             </ul>
           </li>
           <li class="has-children">
@@ -105,7 +217,7 @@
             <button class="submenu-toggle" aria-label="แสดง/ซ่อนเมนู strategy">▾</button>
             <ul class="submenu">
               <li><a href="../strategy/01.html">4.1 กลยุทธ์ การประเมินการลงทุน และต้นทุนคาร์บอน</a></li>
-              <li><a href="../strategy/02.html">4.2 ประเมินทางเลือกระบบขนถ่าย และข้อเสนอการลงทุน</a></li>
+              <li><a href="../strategy/02.html">4.2 เช่าหรือซื้อ Forklift และข้อเสนอการลงทุน</a></li>
             </ul>
           </li>
           <li class="has-children">
