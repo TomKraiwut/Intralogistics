@@ -165,6 +165,18 @@ BODY = f'''
 <div class="note"><strong>ต่างจาก Store:</strong> RackLane ต่อ Connector ไป Drain ได้ เพราะ WMS เป็นตัวสั่งนำของออกจากชั้นวาง
 (ส่วน Store ธรรมดาต่อ Drain ไม่ได้ ต้องเขียน Method สั่ง)</div>
 
+<h3>สร้าง Sensor บน Conveyor ให้เรียก userSetTarget</h3>
+{screenshot("assets/images/simulation/02-32.jpg", "คลิกขวา Conveyor › Create Sensor, หน้าต่าง Sensors.ID1 และ Select Object เลือก userSetTarget")}
+{step_list([
+    "ในหน้าต่าง 3D คลิกขวาบน <strong>Conveyor</strong> › <code>Create Sensor</code>",
+    "หน้าต่าง <strong>Sensors.ID1</strong>: Position = <code>Length</code> · ใส่ <strong>2</strong> [m] (กลางสายพาน 4 m) · ☑ <code>Front</code> (☐ Rear, ☐ Booking Point) · Activate = <code>Always</code>",
+    "ช่อง <code>Control</code>: คลิกปุ่ม <strong>...</strong> › <code>Select Object</code>",
+    "หน้าต่าง <strong>Select Object</strong>: เลือก <code>userSetTarget</code> › <code>OK</code> แล้วกด <code>OK</code> ปิดหน้าต่าง Sensor",
+])}
+<p>เมื่อหัวชิ้นงาน (Front) วิ่งถึงตำแหน่ง 2 m sensor จะเรียก <code>userSetTarget</code> ให้ WMS จองช่องว่างในชั้นวางให้ชิ้นงานนั้น
+— ดูผลได้ที่ Conveyor แท็บ Controls จะขึ้น <strong>Sensors (1)</strong></p>
+<div class="note"><strong>ลืมสร้าง Sensor:</strong> ชิ้นงานจะไม่ได้จองช่อง และไม่ถูกเก็บเข้าคลัง — ปัญหานี้คือแบบฝึก H02 ด้านล่าง</div>
+
 <h2>ขั้นที่ 5: ตั้งค่า RackLane</h2>
 <p>ดับเบิลคลิก RackLane</p>
 {side_by_side(
