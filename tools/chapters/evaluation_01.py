@@ -1,36 +1,28 @@
 # -*- coding: utf-8 -*-
-"""evaluation 1: สอบภาคทฤษฎี -- 2026-11-27: the exam is the THEORY part of the post-test form (post-test.html,
-built from _No_Upload/exam/post_test_draft_TH.md → PostTestCode.gs). No questions or answers on this page."""
-from gen_site import screenshot, step_list, side_by_side
+"""evaluation 1: สอบภาคทฤษฎี -- 2026-11-27: the separate 5.1 Google Form (EXAM_FORMS["theory"]), edited by the user himself
+to 10 questions × 2 points. Page text follows the user's own edit of evaluation/01.html (scope table removed, step 1 shortened).
+No questions or answers on this page."""
+from gen_site import screenshot, step_list, side_by_side, EXAM_FORMS, form_embed
 
 TOPICS = []
 
 OBJECTIVES = [
     "ทบทวนเนื้อหาภาคทฤษฎีของ 4 หมวดวิชาก่อนสอบ",
-    "ทำแบบทดสอบหลังเรียนส่วนภาคทฤษฎี (20 คะแนน) ได้",
+    "ทำแบบทดสอบภาคทฤษฎี (20 คะแนน) ได้",
 ]
 
 BODY = f'''
-<p class="lead" style="max-width:46em;">ภาคทฤษฎีอยู่ใน<a href="post-test.html"><strong>แบบทดสอบหลังเรียน</strong></a>
-(ส่วนแรกของฟอร์ม) — ปรนัย <strong>10 ข้อ ข้อละ 2 คะแนน = 20 คะแนน</strong> ครอบคลุม 4 หมวดวิชา ตรวจอัตโนมัติ
-· รวมกับภาคปฏิบัติ (บท <a href="evaluation-02.html">5.2</a>) เป็น 100 คะแนน <strong>ผ่านเมื่อได้ 60 คะแนนขึ้นไป</strong></p>
-
-<h2>ขอบเขต</h2>
-<table>
-<tr><th>หมวดวิชา</th><th>ทบทวนบท</th></tr>
-<tr><td>หลักการจัดการโลจิสติกส์</td><td><a href="logistics-01.html">1.1</a> — Intralogistics · ชั้นวาง (FIFO / LIFO) · WMS · ความเสี่ยง · งานในคลัง</td></tr>
-<tr><td>การจัดการเชิงกลยุทธ์และการตัดสินใจ</td><td><a href="strategy-01.html">4.1</a> — NPV · ระยะคืนทุน · ทางเลือกที่ไม่ลงทุน · Maximin · 3PL</td></tr>
-<tr><td>การจัดการสินค้าคงคลังและสร้างแบบจำลอง</td><td><a href="simulation-01.html">2.1</a>, <a href="simulation-05.html">2.5</a> — ABC · EOQ · ROP · กราฟสต็อก · Verification</td></tr>
-<tr><td>การใช้แบบจำลองเสมือนจริงวิเคราะห์</td><td><a href="ai-01.html">3.1</a> — Digital Twin · ช่วงความเชื่อมั่น · GA · Neural Network · DOE</td></tr>
-<tr><td><strong>รวม</strong></td><td><strong>10 ข้อ × 2 คะแนน = 20 คะแนน</strong></td></tr>
-</table>
+<p class="lead" style="max-width:46em;">ข้อสอบภาคทฤษฎี — ปรนัย <strong>10 ข้อ ข้อละ 2 คะแนน = 20 คะแนน</strong>
+ครอบคลุม 4 หมวดวิชา ตรวจอัตโนมัติ · รวมกับภาคปฏิบัติ (บท <a href="evaluation-02.html">5.2</a>) เป็น 100 คะแนน
+<strong>ผ่านเมื่อได้ 60 คะแนนขึ้นไป</strong></p>
 
 <h2>ก่อนสอบ</h2>
 {step_list([
-    "เตรียมเครื่องคิดเลข — มีข้อคำนวณ EOQ, ROP, ช่วงความเชื่อมั่น และ NPV (ใช้สูตรและตัวคูณตามบทเรียน)",
+    "ทบทวนเนื้อหาภาคทฤษฎี",
     "ใช้อีเมลเดียวกับตอนทำแบบทดสอบก่อนเรียน และกรอกชื่อ-นามสกุลให้ตรงกับรายชื่อผู้เรียน",
-    "ทำต่อเนื่องจนจบภาคปฏิบัติในฟอร์มเดียวกัน แล้วกด Submit ครั้งเดียว",
+    "ส่งได้ครั้งเดียว ตรวจคำตอบก่อนกด Submit",
 ])}
 
-<div class="download"><a class="download-btn" href="post-test.html">ไปที่แบบทดสอบหลังเรียน</a></div>
+<h2>แบบทดสอบ</h2>
+{form_embed(EXAM_FORMS["theory"], "ข้อสอบภาคทฤษฎี")}
 '''
