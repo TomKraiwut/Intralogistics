@@ -100,7 +100,7 @@ def chapter_page(section, idx):
     prev_href, prev_label = prev if prev else ("pre-test.html", QUIZ_PAGES["pre-test.html"]["title"])
     nxt = _neighbour(section, idx, +1)
     next_html = (f'<a href="{nxt[0]}">ถัดไป: {nxt[1]} →</a>' if nxt
-                 else f'<a href="post-test.html">ถัดไป: {QUIZ_PAGES["post-test.html"]["title"]} →</a>')
+                 else '<span></span>')
 
     body = f'''        <h1>{label} {title}</h1>{kind_html}
 {objs_html}{download_html}

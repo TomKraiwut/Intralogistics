@@ -218,8 +218,7 @@ def sidebar_html(expand_section=None, active_top=None, active_chapter=None):
         parts.append('            </ul>')
         parts.append('          </li>')
 
-    post_active = ' class="active"' if active_top == "post-test.html" else ''
-    parts.append(f'          <li{post_active}><a href="post-test.html">{QUIZ_PAGES["post-test.html"]["title"]}</a></li>')
+    # post-test link removed from the menu (user 2026-11-27); the page itself still exists
     parts.append('        </ul>')
     parts.append('      </nav>')
     return "\n".join(parts)
