@@ -79,7 +79,7 @@ BODY = f'''        <section id="banner">
 {section_blocks()}
 
         <h2>เรียนจบแล้ว</h2>
-{quiz_card("post-test.html", "หลัง", "แบบทดสอบหลังเรียน และแบบประเมินความพึงพอใจต่อหลักสูตร")}'''
+{quiz_card("post-test.html", "หลัง", "แบบทดสอบหลังเรียน")}'''
 
 if __name__ == "__main__":
     write("index.html", page_html("หน้าแรก", BODY, active_top="index"))

@@ -136,7 +136,7 @@ DOWNLOAD_BASE = "https://github.com/TomKraiwut/Intralogistics/releases/latest/do
 QUIZ_PAGES = {
     "pre-test.html": {"title": "แบบสอบถามและแบบทดสอบก่อนเรียน",
                       "form": "https://docs.google.com/forms/d/e/1FAIpQLSea3o1QKozY-y4-mNjBneSvaEsgTwFQymrup_KyraeD_ca90g/viewform"},
-    "post-test.html": {"title": "แบบทดสอบหลังเรียน และแบบประเมิน",
+    "post-test.html": {"title": "แบบทดสอบหลังเรียน",
                        "form": "https://docs.google.com/forms/d/e/1FAIpQLScak20Eau-20UkOb9bfPsDF4MyTKDI6AobywfIbqdWmgbaU2w/viewform"},
 }
 # Exam forms (5.1 theory quiz, 5.2 practical answer sheet) from _No_Upload/exam/ExamCode.gs -> createExams; empty = not open yet.
