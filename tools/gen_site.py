@@ -142,7 +142,7 @@ QUIZ_PAGES = {
 # Exam forms (5.1 theory quiz, 5.2 practical answer sheet) from _No_Upload/exam/ExamCode.gs -> createExams; empty = not open yet.
 EXAM_FORMS = {
     "theory": "https://docs.google.com/forms/d/e/1FAIpQLSds7UH4TXfUCrgfr-_K2tMSXlFmxf3GZbNVR_LqVASoYCxRtA/viewform",
-    "practical": "https://docs.google.com/forms/d/e/1FAIpQLScrX3OF5AktG39rHZTy47XfOJ-ktoSUc5UlLpooh-92zv9i1g/viewform",
+    "practical": "https://docs.google.com/forms/d/e/1FAIpQLSfTrZ-cwojht9p5kXOKBOwbZUWYvqgnWOteVACICpROOxRNdQ/viewform",
 }
 
 
